@@ -15,7 +15,7 @@ public class Juggle : MonoBehaviour
         // isFrontalThrow is meant to indicate whether or not it's launched to a player.
         __travelTime = Random.Range(minTravelTime, maxTravelTime);
         __maxTravelHeight = Random.Range(minHeight, maxHeight);
-        __targetPosition = new Vector3(targetPosition.x, targetPosition.y, 0);
+        __targetPosition = new Vector3(targetPosition.x, 0, targetPosition.z);
 
         StartCoroutine(TravelToTarget());
     }
@@ -31,9 +31,10 @@ public class Juggle : MonoBehaviour
 
             transform.position = new Vector3(
                 Mathf.Lerp(startingPosition.x, __targetPosition.x, elapsedTime / __travelTime),
-                Mathf.Lerp(startingPosition.y, __targetPosition.y, elapsedTime / __travelTime),
-                startingPosition.z - height
-            );
+                startingPosition.y + height,
+				Mathf.Lerp(startingPosition.y, __targetPosition.z, elapsedTime / __travelTime)
+
+			);
 
             elapsedTime += Time.deltaTime;
 
