@@ -27,12 +27,13 @@ public class Juggle : MonoBehaviour
 
         while (elapsedTime < __travelTime)
         {
+            //Aquí hay un bug. Si la bola spawnea a cierta altura, digamos a 1ud de altura. Con esta fórmula núnca llegará a bajar de 1ud cuando esté bajando por "gravedad"
             float height = Mathf.Lerp(0, __maxTravelHeight, 1 - Mathf.Pow((elapsedTime - peakTime) / peakTime, 2));
 
             transform.position = new Vector3(
                 Mathf.Lerp(startingPosition.x, __targetPosition.x, elapsedTime / __travelTime),
                 startingPosition.y + height,
-				Mathf.Lerp(startingPosition.y, __targetPosition.z, elapsedTime / __travelTime)
+				Mathf.Lerp(startingPosition.z, __targetPosition.z, elapsedTime / __travelTime)
 
 			);
 
