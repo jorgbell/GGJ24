@@ -66,4 +66,13 @@ public class MapBorders : MonoBehaviour
 
 		return point;
 	}
+
+
+	public Vector3 GetRandomPositionInArea(float y)
+	{
+		float x = Random.Range(leftBorder+10, rightBorder-10);
+		float z = Random.Range(bottomBorder+10, topBorder-10);
+		return new Vector3(z, y, x);
+	}
+
 }

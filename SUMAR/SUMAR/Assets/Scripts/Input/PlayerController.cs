@@ -21,8 +21,7 @@ public class PlayerController : MonoBehaviour
     public PlayerActions playerInput;
     private Vector3 axisvalue = new Vector3();
     private Queue<INPUTACTIONS> inputQueue = new Queue<INPUTACTIONS>();
-    private int deviceID = -1;
-    public int LinkedDeviceID { get { return deviceID; } }
+
     [SerializeField]
     private int playerID = 1;
 
@@ -44,27 +43,9 @@ public class PlayerController : MonoBehaviour
         playerInput.PlayerActionMap.Taunt.performed += ctx => EnqueueActionInput(ctx, INPUTACTIONS.TAUNT);
         playerInput.PlayerActionMap.Pause.performed += ctx => EnqueueActionInput(ctx, INPUTACTIONS.PAUSE);
     }
-
-    public void LinkDevice(int uniqueID)
+    private void Start()
     {
-        if (uniqueID == -1)
-            Debug.Log("Jugador " + playerID + " desconectado, ID desconectado: " + deviceID);
-        else
-        {
-            deviceID = uniqueID;
-            Debug.Log("Jugador " + playerID + " conectado con mando " + deviceID);
-        }
-
-    }
-
-    private void OnEnable()
-    {
-        playerInput.Enable();
-    }
-
-    private void OnDisable()
-    {
-        playerInput.Disable();
+        transform.position = MapBorders.Instance.GetRandomPositionInArea(transform.position.y);
     }
 
     private void Update()
@@ -111,13 +92,13 @@ public class PlayerController : MonoBehaviour
 
     public void EnqueueActionInput(InputAction.CallbackContext ctx, INPUTACTIONS input)
     {
-        if (ctx.control.device.deviceId == deviceID)
+        if (ctx.performed)
             inputQueue.Enqueue(input);
     }
 
     public void OnMovement(InputAction.CallbackContext ctx)
     {
-        if (ctx.control.device.deviceId == deviceID)
+        if (ctx.performed)
         {
             axisvalue = ctx.ReadValue<Vector3>();
         }
