@@ -10,6 +10,8 @@ public enum INPUTACTIONS { ATTACK, CATCH, THROW, DASH, TAUNT, PAUSE };
 
 public class PlayerController : MonoBehaviour
 {
+    public PlayerActions playerInput;
+
     [Header("Movement")]
     [SerializeField] float movementSpeed;
 
@@ -24,6 +26,16 @@ public class PlayerController : MonoBehaviour
 
     [Header("Other")]
     public PlayerActions playerInput;
+    [Header("Animations")]
+    [SerializeField] Animator animator;
+
+    [Header("Juggle")]
+    [SerializeField] int maxJuggleAmmo = 5;
+    private int juggleAmmo;
+    private List<Juggle> playerJuggles = new List<Juggle>();
+    [SerializeField] JuggleArea juggleArea;
+    [SerializeField] Juggle jugglePrefab;
+
     private Vector3 axisvalue = new Vector3();
     private Queue<INPUTACTIONS> inputQueue = new Queue<INPUTACTIONS>();
 
@@ -57,6 +69,14 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         transform.position = MapBorders.Instance.GetRandomPositionInArea(transform.position.y);
+        juggleAmmo = maxJuggleAmmo;
+
+        for (int i = 0; i < maxJuggleAmmo; i++)
+        {
+            Juggle instantiatedJuggle = Instantiate(jugglePrefab, Vector3.zero, Quaternion.identity);
+            instantiatedJuggle.SetPlayer(this);
+            playerJuggles.Add(instantiatedJuggle);
+        }
     }
 
     private void OnEnable()
@@ -84,7 +104,12 @@ public class PlayerController : MonoBehaviour
                     Debug.Log(catchedInput.ToString());
                     break;
                 case INPUTACTIONS.THROW:
-                    Debug.Log(catchedInput.ToString());
+                    Juggle? juggleToThrow = GetAvailableJuggle();
+
+                    if(juggleToThrow == null) break;
+
+                    Vector3 juggleTargetPosition = GetJugglePosition();
+                    juggleToThrow.setTargetPosition(juggleTargetPosition, this.transform.position, false);
                     break;
                 case INPUTACTIONS.DASH:
                     Debug.Log(catchedInput.ToString());
@@ -115,6 +140,28 @@ public class PlayerController : MonoBehaviour
             HandleMovement();
         }
 	}
+
+    private Vector3 GetJugglePosition() //This little maneuver is going to cost us 100000 years.
+    {
+        Vector3 positionCandidate = juggleArea.SelectPoint();
+        if(MapBorders.Instance.CheckPositionInBorders(positionCandidate) == true)
+        {
+            return positionCandidate + this.transform.position; // A veces una chica
+        }
+
+        return GetJugglePosition();
+    }
+
+    private Juggle? GetAvailableJuggle()
+    {
+        for(int k = 0; k < maxJuggleAmmo; k++)
+        {
+            Juggle juggle = playerJuggles[k];
+            if(juggle.state == JUGGLESTATE.AVAILABLE) return juggle;
+        }
+
+        return null;
+    }
 
     public void EnqueueActionInput(InputAction.CallbackContext ctx, INPUTACTIONS input)
     {
@@ -153,10 +200,13 @@ public class PlayerController : MonoBehaviour
 	{
         if(axisvalue == Vector3.zero)
         {
-            return;
-        }
+            animator.SetBool("isRunning", false);
 
-        Vector3 finalPosition = this.transform.position + (new Vector3(axisvalue.x, 0, axisvalue.y)).normalized * movementSpeed * Time.deltaTime;
+			return;
+		}
+		animator.SetBool("isRunning", true);
+
+		Vector3 finalPosition = this.transform.position + (new Vector3(axisvalue.x, 0, axisvalue.y)).normalized * movementSpeed * Time.deltaTime;
 
 		this.transform.position =  MapBorders.Instance.ClampVectorToArea(finalPosition);
 
