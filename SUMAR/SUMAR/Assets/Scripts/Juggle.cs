@@ -15,7 +15,7 @@ public class Juggle : MonoBehaviour
         // isFrontalThrow is meant to indicate whether or not it's launched to a player.
         __travelTime = Random.Range(minTravelTime, maxTravelTime);
         __maxTravelHeight = Random.Range(minHeight, maxHeight);
-        __targetPosition = new Vector3(targetPosition.x, targetPosition.y, 0);
+        __targetPosition = new Vector3(targetPosition.x, 0, targetPosition.z);
 
         StartCoroutine(TravelToTarget());
     }
@@ -27,13 +27,15 @@ public class Juggle : MonoBehaviour
 
         while (elapsedTime < __travelTime)
         {
+            //Aquí hay un bug. Si la bola spawnea a cierta altura, digamos a 1ud de altura. Con esta fórmula núnca llegará a bajar de 1ud cuando esté bajando por "gravedad"
             float height = Mathf.Lerp(0, __maxTravelHeight, 1 - Mathf.Pow((elapsedTime - peakTime) / peakTime, 2));
 
             transform.position = new Vector3(
                 Mathf.Lerp(startingPosition.x, __targetPosition.x, elapsedTime / __travelTime),
-                Mathf.Lerp(startingPosition.y, __targetPosition.y, elapsedTime / __travelTime),
-                startingPosition.z - height
-            );
+                startingPosition.y + height,
+				Mathf.Lerp(startingPosition.z, __targetPosition.z, elapsedTime / __travelTime)
+
+			);
 
             elapsedTime += Time.deltaTime;
 

@@ -27,9 +27,9 @@ public class JuggleArea : MonoBehaviour
         float distance = Random.Range(minDiameter * 0.5f, maxDiameter * 0.5f);
 
         float x = distance * Mathf.Cos(angle);
-        float y = distance * Mathf.Sin(angle);
+        float z = distance * Mathf.Sin(angle);
 
-        Vector3 randomPoint = new Vector3(x, y, 0f);
+        Vector3 randomPoint = new Vector3(x, 0f, z);
 
         return randomPoint;
     }
