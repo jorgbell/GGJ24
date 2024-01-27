@@ -70,6 +70,7 @@ MonoBehaviour:
   dashSpeed: 30
   dashTime: 0.1
   dashCooldownTime: 1
+  animator: {fileID: 7073712425018367552}
   playerID: 0
 --- !u!114 &5485132102365030772
 MonoBehaviour:

@@ -10,6 +10,8 @@ public enum INPUTACTIONS { ATTACK, CATCH, THROW, DASH, TAUNT, PAUSE };
 
 public class PlayerController : MonoBehaviour
 {
+    public PlayerActions playerInput;
+
     [Header("Movement")]
     [SerializeField] float movementSpeed;
 
@@ -18,7 +20,9 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] float dashTime;
 	[SerializeField] float dashCooldownTime;
 
-    public PlayerActions playerInput;
+    [Header("Animations")]
+    [SerializeField] Animator animator;
+
     private Vector3 axisvalue = new Vector3();
     private Queue<INPUTACTIONS> inputQueue = new Queue<INPUTACTIONS>();
 
@@ -128,10 +132,13 @@ public class PlayerController : MonoBehaviour
 	{
         if(axisvalue == Vector3.zero)
         {
-            return;
-        }
+            animator.SetBool("isRunning", false);
 
-        Vector3 finalPosition = this.transform.position + (new Vector3(axisvalue.x, 0, axisvalue.y)).normalized * movementSpeed * Time.deltaTime;
+			return;
+		}
+		animator.SetBool("isRunning", true);
+
+		Vector3 finalPosition = this.transform.position + (new Vector3(axisvalue.x, 0, axisvalue.y)).normalized * movementSpeed * Time.deltaTime;
 
 		this.transform.position =  MapBorders.Instance.ClampVectorToArea(finalPosition);
 
