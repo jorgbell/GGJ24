@@ -64,10 +64,4 @@ public class ArenaManager : MonoBehaviour
             Debug.Log("player not in arena");
         }
     }
-
-
-
-
-
-
 }

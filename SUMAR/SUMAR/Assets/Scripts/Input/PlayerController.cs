@@ -33,9 +33,9 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-		m_axisvalue = new Vector3();
+		axisvalue = new Vector3();
 
-		m_playerInput = new PlayerActions();
+		playerInput = new PlayerActions();
         // por cada input que est� en el enum hacer esto
         playerInput.PlayerActionMap.Attack.performed += ctx => EnqueueActionInput(ctx, INPUTACTIONS.ATTACK);
         playerInput.PlayerActionMap.CatchBall.performed += ctx => EnqueueActionInput(ctx, INPUTACTIONS.CATCH);
@@ -59,12 +59,12 @@ public class PlayerController : MonoBehaviour
 
     private void OnEnable()
     {
-        m_playerInput.Enable();
+        playerInput.Enable();
     }
 
     private void OnDisable()
     {
-        m_playerInput.Disable();
+        playerInput.Disable();
     }
 
     private void Update()
@@ -119,10 +119,7 @@ public class PlayerController : MonoBehaviour
     {
         if (ctx.control.device.deviceId == deviceID)
         {
-            Debug.Log("Axis movement change");
-            Debug.Log(axisvalue);
             axisvalue = ctx.ReadValue<Vector3>();
-
         }
     }
 
@@ -132,18 +129,18 @@ public class PlayerController : MonoBehaviour
         {
             m_isInDash = true;
             m_initialDashTime = Time.time;
-            m_dashDirection = m_axisvalue;
+            m_dashDirection = axisvalue;
         }
 	}
 
     private void HandleMovement()
 	{
-        if(m_axisvalue == Vector3.zero)
+        if(axisvalue == Vector3.zero)
         {
             return;
         }
 
-        Vector3 finalPosition = this.transform.position + (new Vector3(m_axisvalue.x, 0, m_axisvalue.y)).normalized * movementSpeed * Time.deltaTime;
+        Vector3 finalPosition = this.transform.position + (new Vector3(axisvalue.x, 0, axisvalue.y)).normalized * movementSpeed * Time.deltaTime;
 
 		this.transform.position =  MapBorders.Instance.ClampVectorToArea(finalPosition);
 	}
