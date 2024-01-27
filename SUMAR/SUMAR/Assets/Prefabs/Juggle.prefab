@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2127572407400719539}
   - component: {fileID: 8227200114288004274}
   - component: {fileID: 4332526539692408229}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Juggle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
