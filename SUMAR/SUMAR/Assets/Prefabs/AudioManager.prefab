@@ -48,84 +48,84 @@ MonoBehaviour:
   - name: goofyass1
     clip: {fileID: 8300000, guid: 056c9003c6b6b9d44ab003e60ee823e8, type: 3}
     volume: 1
-    minPitch: 0
-    maxPitch: 0
+    minPitch: 1
+    maxPitch: 1
     loop: 0
     source: {fileID: 0}
   - name: goofyass2
     clip: {fileID: 8300000, guid: 30c3aa39c4e4ba146aeb836f216ca7ef, type: 3}
     volume: 1
-    minPitch: 0
-    maxPitch: 0
+    minPitch: 1
+    maxPitch: 1
     loop: 0
     source: {fileID: 0}
   - name: goofyass3
     clip: {fileID: 8300000, guid: dd11d285c8c59834aa81955ecd39a692, type: 3}
-    volume: 1
-    minPitch: 0
-    maxPitch: 0
+    volume: 0.937
+    minPitch: 1
+    maxPitch: 1
     loop: 0
     source: {fileID: 0}
   - name: goofyass4
     clip: {fileID: 8300000, guid: fc2397eecc6dd2949857bdd16b97b2b1, type: 3}
     volume: 1
-    minPitch: 0
-    maxPitch: 0
+    minPitch: 1
+    maxPitch: 1
     loop: 0
     source: {fileID: 0}
   - name: goofyass5
     clip: {fileID: 8300000, guid: ecf9fc46bdb4e9845ad3c02f9e0cd7af, type: 3}
     volume: 1
-    minPitch: 0
-    maxPitch: 0
+    minPitch: 1
+    maxPitch: 1
     loop: 0
     source: {fileID: 0}
   - name: goofyass6
     clip: {fileID: 8300000, guid: e20656ccdb2c41b4b9d76c02d1c93cc9, type: 3}
     volume: 1
-    minPitch: 0
-    maxPitch: 0
+    minPitch: 1
+    maxPitch: 1
     loop: 0
     source: {fileID: 0}
   - name: goofyass7
     clip: {fileID: 8300000, guid: 673536e41bfc05f49b42af3ba588fd9d, type: 3}
     volume: 1
-    minPitch: 0
-    maxPitch: 0
+    minPitch: 1
+    maxPitch: 1
     loop: 0
     source: {fileID: 0}
   - name: goofyass8
     clip: {fileID: 8300000, guid: 4be87e6141fe14c43b87962eb76b216d, type: 3}
     volume: 1
-    minPitch: 0
-    maxPitch: 0
+    minPitch: 1
+    maxPitch: 1
     loop: 0
     source: {fileID: 0}
   - name: ost1
     clip: {fileID: 8300000, guid: 5d7588c952c4a6943a68fc6ccfb149b1, type: 3}
     volume: 1
-    minPitch: 0
-    maxPitch: 0
+    minPitch: 1
+    maxPitch: 1
     loop: 1
     source: {fileID: 0}
   - name: ost2
     clip: {fileID: 8300000, guid: 1144831024a219b44bb830a348746565, type: 3}
     volume: 1
-    minPitch: 0
-    maxPitch: 0
+    minPitch: 1
+    maxPitch: 1
     loop: 1
     source: {fileID: 0}
   - name: risas
     clip: {fileID: 8300000, guid: a3d873d7f821111439d40e53ba014d12, type: 3}
     volume: 1
-    minPitch: 0
-    maxPitch: 0
+    minPitch: 1
+    maxPitch: 1
     loop: 0
     source: {fileID: 0}
   - name: risas1
     clip: {fileID: 8300000, guid: 9aca914b478a3de4aaa9b34f90dba69b, type: 3}
     volume: 1
-    minPitch: 0
-    maxPitch: 0
+    minPitch: 1
+    maxPitch: 1
     loop: 0
     source: {fileID: 0}

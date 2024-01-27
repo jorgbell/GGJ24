@@ -28,12 +28,25 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        //if (Random.Range(0, 2) == 0)
-        //    AudioManager.instance.Play("ost1");
-        //else
-        //    AudioManager.instance.Play("ost1");
+        if (Random.Range(0, 2) == 0)
+            AudioManager.instance.Play("ost1");
+        else
+            AudioManager.instance.Play("ost1");
     }
-    public void LoadScene(string sceneName)
+
+
+    bool freeze = false;
+	private void Update()
+	{
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            freeze = !freeze;
+
+            Time.timeScale = freeze ? 0.0f : 1.0f;
+        }
+	}
+
+	public void LoadScene(string sceneName)
     {
 
         if (SceneExists(sceneName))
