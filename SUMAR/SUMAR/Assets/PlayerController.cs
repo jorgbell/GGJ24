@@ -4,15 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-
-/// <summary>
-/// El funcionamiento del sistema de input es:
-/// - Abrir el PlayerActions
-/// - Añadir una nueva action dentro del action map
-/// - Crear un metodo que reciba un callbackContext publico y asociarlo al script Player Input
-/// - pillar el valor de la accion dentro del metodo
-/// </summary>
-
+//enum para gestionar los tipos de inputs digitales (botones encendido-apagado)
 public enum INPUTACTIONS { ATTACK, CATCH, THROW, DASH, TAUNT, PAUSE};
 
 public class PlayerController : MonoBehaviour
@@ -25,7 +17,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         playerInput = new PlayerActions();
-        // Asignar funciones a los eventos de las acciones
+        // por cada input que esté en el enum hacer esto
         playerInput.PlayerActionMap.Attack.performed += ctx => EnqueueActionInput(INPUTACTIONS.ATTACK);
         playerInput.PlayerActionMap.CatchBall.performed += ctx => EnqueueActionInput(INPUTACTIONS.CATCH);
         playerInput.PlayerActionMap.ThrowBall.performed += ctx => EnqueueActionInput(INPUTACTIONS.THROW);
@@ -78,20 +70,7 @@ public class PlayerController : MonoBehaviour
 
     public void EnqueueActionInput(INPUTACTIONS input)
     {
-        Debug.Log(input);
-    }
-
-
-
-    public void EnqueueAction(InputAction.CallbackContext ctx)
-    {
-        if (ctx.performed)
-        {
-            Debug.Log(ctx.action.id.ToString());
-            Debug.Log(ctx.action.name);
-            Debug.Log(ctx.action.type.ToString());
-        }
-
+        inputQueue.Enqueue(input);
     }
 
     public void OnMovement(InputAction.CallbackContext ctx)
