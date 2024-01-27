@@ -18,6 +18,11 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] float dashTime;
 	[SerializeField] float dashCooldownTime;
 
+    [Header("Taunt")]
+    [SerializeField] float tauntTime;
+    [SerializeField] private GameObject tauntSignal;
+
+    [Header("Other")]
     public PlayerActions playerInput;
     private Vector3 axisvalue = new Vector3();
     private Queue<INPUTACTIONS> inputQueue = new Queue<INPUTACTIONS>();
@@ -30,6 +35,9 @@ public class PlayerController : MonoBehaviour
     float m_initialDashTime;
     float m_endDashTime;
     Vector2 m_dashDirection;
+
+    bool m_isInTaunt = false;
+    float m_initialTauntTime;
 
     private void Awake()
     {
@@ -89,6 +97,7 @@ public class PlayerController : MonoBehaviour
                     OnDash();
 					break;
                 case INPUTACTIONS.TAUNT:
+                    OnTaunt();
                     Debug.Log(catchedInput.ToString());
                     break;
                 case INPUTACTIONS.PAUSE:
@@ -99,7 +108,11 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (m_isInDash)
+        if (m_isInTaunt)
+        {
+            HandleTaunt();
+
+        }else if(m_isInDash)
         {
             HandleDash();
         }
@@ -125,13 +138,22 @@ public class PlayerController : MonoBehaviour
 
     public void OnDash()
     {
-        if (!m_isInDash && Time.time > m_endDashTime + dashCooldownTime)
+        if (!m_isInDash && Time.time > m_endDashTime + dashCooldownTime && !m_isInTaunt)
         {
             m_isInDash = true;
             m_initialDashTime = Time.time;
             m_dashDirection = axisvalue;
         }
 	}
+    public void OnTaunt()
+    {
+        if (!m_isInDash)
+        {
+            m_isInTaunt = true;
+            m_initialTauntTime = Time.time;
+            tauntSignal.SetActive(true);
+        }
+    }
 
     private void HandleMovement()
 	{
@@ -158,4 +180,14 @@ public class PlayerController : MonoBehaviour
 
 		this.transform.position = MapBorders.Instance.ClampVectorToArea(finalPosition);
 	}
+
+    private void HandleTaunt()
+    {
+        if (m_initialTauntTime + tauntTime < Time.time)
+        {
+            m_isInTaunt = false;
+            tauntSignal.SetActive(false);
+            return;
+        }
+    }
 }
