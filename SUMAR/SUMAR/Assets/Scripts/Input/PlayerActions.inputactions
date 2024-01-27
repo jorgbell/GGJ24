@@ -13,6 +13,60 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Attack",
+                    "type": "Button",
+                    "id": "49477533-bef0-4324-b867-e0e43bb55bd4",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Throw Ball",
+                    "type": "Button",
+                    "id": "e8ded651-7f44-4617-b725-4ae7fba9c075",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Catch Ball",
+                    "type": "Button",
+                    "id": "5506094d-7700-4429-9398-af15d347d642",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Dash",
+                    "type": "Button",
+                    "id": "0dc6b101-a5ef-4879-9a01-ee54a0706001",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Taunt",
+                    "type": "Button",
+                    "id": "aaf0e9b6-b508-4e1c-b0ff-de58fd612b73",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "6f3b2839-2f40-4dd5-8c60-d22827388dcc",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -94,81 +148,70 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "D-PAD",
-                    "id": "7c665ebe-2dfb-4f63-9695-2bead6318f5e",
-                    "path": "3DVector",
+                    "name": "",
+                    "id": "6a34625f-baee-4675-bb62-26a95d5284e7",
+                    "path": "<Gamepad>/rightShoulder",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Movement",
-                    "isComposite": true,
+                    "action": "Attack",
+                    "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "up",
-                    "id": "49b8de49-9210-4923-8870-c972c3f5ca14",
-                    "path": "<Gamepad>/dpad/up",
+                    "name": "",
+                    "id": "4d03f6df-5798-4f9d-9917-54fdf8db5444",
+                    "path": "<Gamepad>/leftTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Movement",
+                    "action": "Catch Ball",
                     "isComposite": false,
-                    "isPartOfComposite": true
+                    "isPartOfComposite": false
                 },
                 {
-                    "name": "down",
-                    "id": "989a2f3e-1373-4354-a6a3-5667e982bec3",
-                    "path": "<Gamepad>/dpad/down",
+                    "name": "",
+                    "id": "7b78d98d-5e42-4078-b934-8b33bf9a63ba",
+                    "path": "<Gamepad>/buttonSouth",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Movement",
+                    "action": "Dash",
                     "isComposite": false,
-                    "isPartOfComposite": true
+                    "isPartOfComposite": false
                 },
                 {
-                    "name": "left",
-                    "id": "fb75d544-fcd0-4bc6-973b-93751d44aee7",
-                    "path": "<Gamepad>/dpad/left",
+                    "name": "",
+                    "id": "46b6fb54-9002-43ae-a8da-a2feb664d33f",
+                    "path": "<Gamepad>/buttonNorth",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Movement",
+                    "action": "Taunt",
                     "isComposite": false,
-                    "isPartOfComposite": true
+                    "isPartOfComposite": false
                 },
                 {
-                    "name": "right",
-                    "id": "10984f77-29c1-4621-87c4-8a7ec88f2741",
-                    "path": "<Gamepad>/dpad/right",
+                    "name": "",
+                    "id": "3bb27818-7cd1-4c44-b438-c6212e786951",
+                    "path": "<Gamepad>/rightTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Movement",
+                    "action": "Throw Ball",
                     "isComposite": false,
-                    "isPartOfComposite": true
+                    "isPartOfComposite": false
                 },
                 {
-                    "name": "forward",
-                    "id": "6097665f-4db8-427d-a87d-1252388a3d77",
-                    "path": "",
+                    "name": "",
+                    "id": "bd136af8-62d0-4ed4-a872-d3741c5db25b",
+                    "path": "<Gamepad>/start",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Movement",
+                    "action": "Pause",
                     "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "backward",
-                    "id": "bb1e9ca9-ceba-452d-96b4-c3c640016e3d",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Movement",
-                    "isComposite": false,
-                    "isPartOfComposite": true
+                    "isPartOfComposite": false
                 }
             ]
         }

@@ -35,6 +35,60 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Attack"",
+                    ""type"": ""Button"",
+                    ""id"": ""49477533-bef0-4324-b867-e0e43bb55bd4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Throw Ball"",
+                    ""type"": ""Button"",
+                    ""id"": ""e8ded651-7f44-4617-b725-4ae7fba9c075"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Catch Ball"",
+                    ""type"": ""Button"",
+                    ""id"": ""5506094d-7700-4429-9398-af15d347d642"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Dash"",
+                    ""type"": ""Button"",
+                    ""id"": ""0dc6b101-a5ef-4879-9a01-ee54a0706001"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Taunt"",
+                    ""type"": ""Button"",
+                    ""id"": ""aaf0e9b6-b508-4e1c-b0ff-de58fd612b73"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""6f3b2839-2f40-4dd5-8c60-d22827388dcc"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -116,81 +170,70 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""D-PAD"",
-                    ""id"": ""7c665ebe-2dfb-4f63-9695-2bead6318f5e"",
-                    ""path"": ""3DVector"",
+                    ""name"": """",
+                    ""id"": ""6a34625f-baee-4675-bb62-26a95d5284e7"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Movement"",
-                    ""isComposite"": true,
+                    ""action"": ""Attack"",
+                    ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""up"",
-                    ""id"": ""49b8de49-9210-4923-8870-c972c3f5ca14"",
-                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""name"": """",
+                    ""id"": ""4d03f6df-5798-4f9d-9917-54fdf8db5444"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Movement"",
+                    ""action"": ""Catch Ball"",
                     ""isComposite"": false,
-                    ""isPartOfComposite"": true
+                    ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""down"",
-                    ""id"": ""989a2f3e-1373-4354-a6a3-5667e982bec3"",
-                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""name"": """",
+                    ""id"": ""7b78d98d-5e42-4078-b934-8b33bf9a63ba"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Movement"",
+                    ""action"": ""Dash"",
                     ""isComposite"": false,
-                    ""isPartOfComposite"": true
+                    ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""left"",
-                    ""id"": ""fb75d544-fcd0-4bc6-973b-93751d44aee7"",
-                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""name"": """",
+                    ""id"": ""46b6fb54-9002-43ae-a8da-a2feb664d33f"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Movement"",
+                    ""action"": ""Taunt"",
                     ""isComposite"": false,
-                    ""isPartOfComposite"": true
+                    ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""right"",
-                    ""id"": ""10984f77-29c1-4621-87c4-8a7ec88f2741"",
-                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""name"": """",
+                    ""id"": ""3bb27818-7cd1-4c44-b438-c6212e786951"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Movement"",
+                    ""action"": ""Throw Ball"",
                     ""isComposite"": false,
-                    ""isPartOfComposite"": true
+                    ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""forward"",
-                    ""id"": ""6097665f-4db8-427d-a87d-1252388a3d77"",
-                    ""path"": """",
+                    ""name"": """",
+                    ""id"": ""bd136af8-62d0-4ed4-a872-d3741c5db25b"",
+                    ""path"": ""<Gamepad>/start"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Movement"",
+                    ""action"": ""Pause"",
                     ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""backward"",
-                    ""id"": ""bb1e9ca9-ceba-452d-96b4-c3c640016e3d"",
-                    ""path"": """",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Movement"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -200,6 +243,12 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
         // Player Action Map
         m_PlayerActionMap = asset.FindActionMap("Player Action Map", throwIfNotFound: true);
         m_PlayerActionMap_Movement = m_PlayerActionMap.FindAction("Movement", throwIfNotFound: true);
+        m_PlayerActionMap_Attack = m_PlayerActionMap.FindAction("Attack", throwIfNotFound: true);
+        m_PlayerActionMap_ThrowBall = m_PlayerActionMap.FindAction("Throw Ball", throwIfNotFound: true);
+        m_PlayerActionMap_CatchBall = m_PlayerActionMap.FindAction("Catch Ball", throwIfNotFound: true);
+        m_PlayerActionMap_Dash = m_PlayerActionMap.FindAction("Dash", throwIfNotFound: true);
+        m_PlayerActionMap_Taunt = m_PlayerActionMap.FindAction("Taunt", throwIfNotFound: true);
+        m_PlayerActionMap_Pause = m_PlayerActionMap.FindAction("Pause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -262,11 +311,23 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_PlayerActionMap;
     private List<IPlayerActionMapActions> m_PlayerActionMapActionsCallbackInterfaces = new List<IPlayerActionMapActions>();
     private readonly InputAction m_PlayerActionMap_Movement;
+    private readonly InputAction m_PlayerActionMap_Attack;
+    private readonly InputAction m_PlayerActionMap_ThrowBall;
+    private readonly InputAction m_PlayerActionMap_CatchBall;
+    private readonly InputAction m_PlayerActionMap_Dash;
+    private readonly InputAction m_PlayerActionMap_Taunt;
+    private readonly InputAction m_PlayerActionMap_Pause;
     public struct PlayerActionMapActions
     {
         private @PlayerActions m_Wrapper;
         public PlayerActionMapActions(@PlayerActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_PlayerActionMap_Movement;
+        public InputAction @Attack => m_Wrapper.m_PlayerActionMap_Attack;
+        public InputAction @ThrowBall => m_Wrapper.m_PlayerActionMap_ThrowBall;
+        public InputAction @CatchBall => m_Wrapper.m_PlayerActionMap_CatchBall;
+        public InputAction @Dash => m_Wrapper.m_PlayerActionMap_Dash;
+        public InputAction @Taunt => m_Wrapper.m_PlayerActionMap_Taunt;
+        public InputAction @Pause => m_Wrapper.m_PlayerActionMap_Pause;
         public InputActionMap Get() { return m_Wrapper.m_PlayerActionMap; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -279,6 +340,24 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
             @Movement.started += instance.OnMovement;
             @Movement.performed += instance.OnMovement;
             @Movement.canceled += instance.OnMovement;
+            @Attack.started += instance.OnAttack;
+            @Attack.performed += instance.OnAttack;
+            @Attack.canceled += instance.OnAttack;
+            @ThrowBall.started += instance.OnThrowBall;
+            @ThrowBall.performed += instance.OnThrowBall;
+            @ThrowBall.canceled += instance.OnThrowBall;
+            @CatchBall.started += instance.OnCatchBall;
+            @CatchBall.performed += instance.OnCatchBall;
+            @CatchBall.canceled += instance.OnCatchBall;
+            @Dash.started += instance.OnDash;
+            @Dash.performed += instance.OnDash;
+            @Dash.canceled += instance.OnDash;
+            @Taunt.started += instance.OnTaunt;
+            @Taunt.performed += instance.OnTaunt;
+            @Taunt.canceled += instance.OnTaunt;
+            @Pause.started += instance.OnPause;
+            @Pause.performed += instance.OnPause;
+            @Pause.canceled += instance.OnPause;
         }
 
         private void UnregisterCallbacks(IPlayerActionMapActions instance)
@@ -286,6 +365,24 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
             @Movement.started -= instance.OnMovement;
             @Movement.performed -= instance.OnMovement;
             @Movement.canceled -= instance.OnMovement;
+            @Attack.started -= instance.OnAttack;
+            @Attack.performed -= instance.OnAttack;
+            @Attack.canceled -= instance.OnAttack;
+            @ThrowBall.started -= instance.OnThrowBall;
+            @ThrowBall.performed -= instance.OnThrowBall;
+            @ThrowBall.canceled -= instance.OnThrowBall;
+            @CatchBall.started -= instance.OnCatchBall;
+            @CatchBall.performed -= instance.OnCatchBall;
+            @CatchBall.canceled -= instance.OnCatchBall;
+            @Dash.started -= instance.OnDash;
+            @Dash.performed -= instance.OnDash;
+            @Dash.canceled -= instance.OnDash;
+            @Taunt.started -= instance.OnTaunt;
+            @Taunt.performed -= instance.OnTaunt;
+            @Taunt.canceled -= instance.OnTaunt;
+            @Pause.started -= instance.OnPause;
+            @Pause.performed -= instance.OnPause;
+            @Pause.canceled -= instance.OnPause;
         }
 
         public void RemoveCallbacks(IPlayerActionMapActions instance)
@@ -306,5 +403,11 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
     public interface IPlayerActionMapActions
     {
         void OnMovement(InputAction.CallbackContext context);
+        void OnAttack(InputAction.CallbackContext context);
+        void OnThrowBall(InputAction.CallbackContext context);
+        void OnCatchBall(InputAction.CallbackContext context);
+        void OnDash(InputAction.CallbackContext context);
+        void OnTaunt(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
 }
