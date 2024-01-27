@@ -143,6 +143,13 @@ public class PlayerController : MonoBehaviour
         Vector3 finalPosition = this.transform.position + (new Vector3(axisvalue.x, 0, axisvalue.y)).normalized * movementSpeed * Time.deltaTime;
 
 		this.transform.position =  MapBorders.Instance.ClampVectorToArea(finalPosition);
+
+        if((axisvalue.x > 0 && transform.localScale.x > 0) || (axisvalue.x < 0 && transform.localScale.x < 0))
+        {
+            Vector3 scale = transform.localScale;
+			scale.x *= -1;
+            transform.localScale = scale;
+		}
 	}
 
     private void HandleDash()
