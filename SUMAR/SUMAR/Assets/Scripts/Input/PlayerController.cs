@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Taunt")]
     [SerializeField] float tauntTime;
-    [SerializeField] private GameObject tauntSignal;
+    private SpriteRenderer spriteRenderer; //CAMBIARPORANIMACION
 
     [Header("Other")]
     public PlayerActions playerInput;
@@ -50,7 +50,10 @@ public class PlayerController : MonoBehaviour
         playerInput.PlayerActionMap.Dash.performed += ctx => EnqueueActionInput(ctx, INPUTACTIONS.DASH);
         playerInput.PlayerActionMap.Taunt.performed += ctx => EnqueueActionInput(ctx, INPUTACTIONS.TAUNT);
         playerInput.PlayerActionMap.Pause.performed += ctx => EnqueueActionInput(ctx, INPUTACTIONS.PAUSE);
+
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
+
     private void Start()
     {
         transform.position = MapBorders.Instance.GetRandomPositionInArea(transform.position.y);
@@ -142,7 +145,7 @@ public class PlayerController : MonoBehaviour
         {
             m_isInTaunt = true;
             m_initialTauntTime = Time.time;
-            tauntSignal.SetActive(true);
+            spriteRenderer.color = Color.blue;
         }
     }
 
@@ -184,7 +187,7 @@ public class PlayerController : MonoBehaviour
         if (m_initialTauntTime + tauntTime < Time.time)
         {
             m_isInTaunt = false;
-            tauntSignal.SetActive(false);
+            spriteRenderer.color = Color.white;
             return;
         }
     }
