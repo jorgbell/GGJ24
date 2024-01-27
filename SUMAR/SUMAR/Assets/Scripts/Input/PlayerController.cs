@@ -30,7 +30,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] JuggleArea juggleArea;
     [SerializeField] Juggle jugglePrefab;
 
-    public PlayerActions playerInput;
     private Vector3 axisvalue = new Vector3();
     private Queue<INPUTACTIONS> inputQueue = new Queue<INPUTACTIONS>();
 
