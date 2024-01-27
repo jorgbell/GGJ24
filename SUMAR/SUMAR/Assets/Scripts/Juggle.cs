@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class Juggle : MonoBehaviour
 {
-    [SerializeField] float minTravelTime = 0.5f, maxTravelTime = 1f;
-    [SerializeField] float minHeight = 10f, maxHeight = 30f;
+    [SerializeField] float minTravelTime = 4f, maxTravelTime = 4f;
+    [SerializeField] float minHeight = 20f, maxHeight = 20f;
 
     private float __travelTime = 0f, __maxTravelHeight = 0f;
     private Vector3 __targetPosition;
+    private float __elapsedTime;
 
     public void setTargetPosition(Vector3 targetPosition, bool isFrontalThrow = false)
     {
@@ -22,26 +23,42 @@ public class Juggle : MonoBehaviour
 
     IEnumerator TravelToTarget()
     {
-        float elapsedTime = 0.0f, peakTime = __travelTime * 0.5f;
+        __elapsedTime = 0.0f;
+        float peakTime = __travelTime * 0.5f;
         Vector3 startingPosition = transform.position;
 
-        while (elapsedTime < __travelTime)
+        while (__elapsedTime < __travelTime)
         {
             //Aquí hay un bug. Si la bola spawnea a cierta altura, digamos a 1ud de altura. Con esta fórmula núnca llegará a bajar de 1ud cuando esté bajando por "gravedad"
-            float height = Mathf.Lerp(0, __maxTravelHeight, 1 - Mathf.Pow((elapsedTime - peakTime) / peakTime, 2));
+            float height = Mathf.Lerp(0, __maxTravelHeight, 1 - Mathf.Pow((__elapsedTime - peakTime) / peakTime, 2));
 
             transform.position = new Vector3(
-                Mathf.Lerp(startingPosition.x, __targetPosition.x, elapsedTime / __travelTime),
+                Mathf.Lerp(startingPosition.x, __targetPosition.x, __elapsedTime / __travelTime),
                 startingPosition.y + height,
-				Mathf.Lerp(startingPosition.z, __targetPosition.z, elapsedTime / __travelTime)
+				Mathf.Lerp(startingPosition.z, __targetPosition.z, __elapsedTime / __travelTime)
 
 			);
 
-            elapsedTime += Time.deltaTime;
+            __elapsedTime += Time.deltaTime;
 
             yield return null;
         }
 
         transform.position = __targetPosition;
+    }
+
+	private void OnDrawGizmos()
+	{
+        Gizmos.color = Color.green;
+        Gizmos.DrawSphere(__targetPosition, 0.2f);
+    }
+
+    public bool isFalling() {
+        return (__elapsedTime*2) < __travelTime;
+    }
+
+    public bool isOnFloor()
+    {
+        return __elapsedTime >= __travelTime;
     }
 }

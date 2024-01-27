@@ -47,10 +47,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 799bbedb8f51f064b9f5349aecae010b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minTravelTime: 0.5
-  maxTravelTime: 1
-  minHeight: 3
-  maxHeight: 7
+  minTravelTime: 3
+  maxTravelTime: 4
+  minHeight: 6
+  maxHeight: 6
 --- !u!33 &2127572407400719539
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -116,7 +116,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
