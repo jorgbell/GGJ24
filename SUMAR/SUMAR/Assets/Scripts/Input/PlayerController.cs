@@ -9,14 +9,19 @@ public enum INPUTACTIONS { ATTACK, CATCH, THROW, DASH, TAUNT, PAUSE};
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] float movementSpeed;
+
+
     public PlayerActions playerInput;
-    private Vector3 axisvalue = new Vector3();
+    private Vector3 axisvalue;
     private Queue<INPUTACTIONS> inputQueue = new Queue<INPUTACTIONS>();
 
 
     private void Awake()
     {
-        playerInput = new PlayerActions();
+		axisvalue = new Vector3();
+
+		playerInput = new PlayerActions();
         // por cada input que esté en el enum hacer esto
         playerInput.PlayerActionMap.Attack.performed += ctx => EnqueueActionInput(INPUTACTIONS.ATTACK);
         playerInput.PlayerActionMap.CatchBall.performed += ctx => EnqueueActionInput(INPUTACTIONS.CATCH);
@@ -66,7 +71,9 @@ public class PlayerController : MonoBehaviour
                     break;
             }
         }
-    }
+
+        HandleMovement();
+	}
 
     public void EnqueueActionInput(INPUTACTIONS input)
     {
@@ -75,9 +82,20 @@ public class PlayerController : MonoBehaviour
 
     public void OnMovement(InputAction.CallbackContext ctx)
     {
-        Debug.Log("Axis movement change");
-        Debug.Log(axisvalue);
         axisvalue = ctx.ReadValue<Vector3>();
-    }
+	}
 
+
+
+    private void HandleMovement()
+	{
+        if(axisvalue == Vector3.zero)
+        {
+            return;
+        }
+
+        Vector3 finalPosition = this.transform.position + new Vector3(axisvalue.x, 0, axisvalue.y) * movementSpeed * Time.deltaTime;
+
+		this.transform.position =  MapBorders.Instance.ClampVectorToArea(finalPosition);
+	}
 }
