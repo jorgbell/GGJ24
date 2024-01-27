@@ -48,6 +48,16 @@ public class PlayerController : MonoBehaviour
         transform.position = MapBorders.Instance.GetRandomPositionInArea(transform.position.y);
     }
 
+    private void OnEnable()
+    {
+        playerInput.Enable();
+    }
+    private void OnDisable()
+    {
+        playerInput.Disable();
+    }
+
+
     private void Update()
     {
         INPUTACTIONS catchedInput;
@@ -92,7 +102,7 @@ public class PlayerController : MonoBehaviour
 
     public void EnqueueActionInput(InputAction.CallbackContext ctx, INPUTACTIONS input)
     {
-        if (ctx.performed)
+        //if (ctx.performed)
             inputQueue.Enqueue(input);
     }
 
