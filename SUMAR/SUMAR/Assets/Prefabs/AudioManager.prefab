@@ -1,0 +1,131 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2989472001488146353
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3070764394027461905}
+  - component: {fileID: 1313662486167880739}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3070764394027461905
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2989472001488146353}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1313662486167880739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2989472001488146353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfe617b9caf04e44197be19bc0073d2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: goofyass1
+    clip: {fileID: 8300000, guid: 056c9003c6b6b9d44ab003e60ee823e8, type: 3}
+    volume: 1
+    minPitch: 0
+    maxPitch: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: goofyass2
+    clip: {fileID: 8300000, guid: 30c3aa39c4e4ba146aeb836f216ca7ef, type: 3}
+    volume: 1
+    minPitch: 0
+    maxPitch: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: goofyass3
+    clip: {fileID: 8300000, guid: dd11d285c8c59834aa81955ecd39a692, type: 3}
+    volume: 1
+    minPitch: 0
+    maxPitch: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: goofyass4
+    clip: {fileID: 8300000, guid: fc2397eecc6dd2949857bdd16b97b2b1, type: 3}
+    volume: 1
+    minPitch: 0
+    maxPitch: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: goofyass5
+    clip: {fileID: 8300000, guid: ecf9fc46bdb4e9845ad3c02f9e0cd7af, type: 3}
+    volume: 1
+    minPitch: 0
+    maxPitch: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: goofyass6
+    clip: {fileID: 8300000, guid: e20656ccdb2c41b4b9d76c02d1c93cc9, type: 3}
+    volume: 1
+    minPitch: 0
+    maxPitch: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: goofyass7
+    clip: {fileID: 8300000, guid: 673536e41bfc05f49b42af3ba588fd9d, type: 3}
+    volume: 1
+    minPitch: 0
+    maxPitch: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: goofyass8
+    clip: {fileID: 8300000, guid: 4be87e6141fe14c43b87962eb76b216d, type: 3}
+    volume: 1
+    minPitch: 0
+    maxPitch: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: ost1
+    clip: {fileID: 8300000, guid: 5d7588c952c4a6943a68fc6ccfb149b1, type: 3}
+    volume: 1
+    minPitch: 0
+    maxPitch: 0
+    loop: 1
+    source: {fileID: 0}
+  - name: ost2
+    clip: {fileID: 8300000, guid: 1144831024a219b44bb830a348746565, type: 3}
+    volume: 1
+    minPitch: 0
+    maxPitch: 0
+    loop: 1
+    source: {fileID: 0}
+  - name: risas
+    clip: {fileID: 8300000, guid: a3d873d7f821111439d40e53ba014d12, type: 3}
+    volume: 1
+    minPitch: 0
+    maxPitch: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: risas1
+    clip: {fileID: 8300000, guid: 9aca914b478a3de4aaa9b34f90dba69b, type: 3}
+    volume: 1
+    minPitch: 0
+    maxPitch: 0
+    loop: 0
+    source: {fileID: 0}

@@ -41,6 +41,14 @@ public class GameManager : MonoBehaviour
         InputSystem.onDeviceChange -= HandleDeviceChange;
     }
 
+    private void Start()
+    {
+        if(Random.Range(0,2) == 0)
+            AudioManager.instance.Play("ost1");
+        else
+            AudioManager.instance.Play("ost1");
+    }
+
     public void HandleDeviceChange(InputDevice device, InputDeviceChange change)
     {
         //casteo para solo recibir mandos
