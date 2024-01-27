@@ -340,9 +340,10 @@ GameObject:
   - component: {fileID: 734055935}
   - component: {fileID: 734055934}
   - component: {fileID: 734055933}
-  - component: {fileID: 734055932}
-  - component: {fileID: 734055937}
   - component: {fileID: 734055938}
+  - component: {fileID: 734055932}
+  - component: {fileID: 734055940}
+  - component: {fileID: 734055939}
   m_Layer: 7
   m_Name: PlayerCapsule
   m_TagString: Untagged
@@ -456,19 +457,6 @@ Transform:
   - {fileID: 1445426493}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &734055937
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 734055931}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39a7f14969eb5de4a9cb449cc65679b3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 10
 --- !u!54 &734055938
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -496,6 +484,92 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &734055939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 734055931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 0074f9a56e3a12945904f33b9dc97d7e, type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 734055940}
+        m_TargetAssemblyTypeName: PlayerController, Input
+        m_MethodName: OnMovement
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 09d4bc0f-78a9-4301-8b6e-988eb623de01
+    m_ActionName: Player Action Map/Movement
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 49477533-bef0-4324-b867-e0e43bb55bd4
+    m_ActionName: Player Action Map/New action
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 5506094d-7700-4429-9398-af15d347d642
+    m_ActionName: Player Action Map/New action
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0dc6b101-a5ef-4879-9a01-ee54a0706001
+    m_ActionName: Player Action Map/New action
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: aaf0e9b6-b508-4e1c-b0ff-de58fd612b73
+    m_ActionName: Player Action Map/New action
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e8ded651-7f44-4617-b725-4ae7fba9c075
+    m_ActionName: Player Action Map/New action
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 6f3b2839-2f40-4dd5-8c60-d22827388dcc
+    m_ActionName: Player Action Map/Pause[/DualShock4GamepadHID/start]
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Player Action Map
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
+--- !u!114 &734055940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 734055931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e491687bd303a684680776de95bbdf4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementSpeed: 10
+  dashSpeed: 30
+  dashTime: 0.1
+  dashCooldownTime: 1
 --- !u!1 &757026778
 GameObject:
   m_ObjectHideFlags: 0
@@ -1109,6 +1183,6 @@ SceneRoots:
   - {fileID: 1472741406}
   - {fileID: 314029702}
   - {fileID: 1428147340}
-  - {fileID: 734055936}
   - {fileID: 1842159131}
+  - {fileID: 734055936}
   - {fileID: 1879017830}

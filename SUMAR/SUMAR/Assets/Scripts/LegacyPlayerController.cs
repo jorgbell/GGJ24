@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerControllerMmur : MonoBehaviour
+public class LegacyPlayerController : MonoBehaviour
 {
     [SerializeField] private JuggleArea juggleArea = null;
     [SerializeField] private Juggle juggle = null;
