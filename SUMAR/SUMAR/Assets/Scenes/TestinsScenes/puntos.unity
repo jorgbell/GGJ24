@@ -879,7 +879,7 @@ MonoBehaviour:
   juggleSpawnPoint: {fileID: 1494672440}
   catchRadius: 2.43
   numberBalls: 5
-  numberBallsText: {fileID: 0}
+  numberBallsText: {fileID: 610086429}
   pointsManager: {fileID: 440503857}
 --- !u!136 &734055933
 CapsuleCollider:
