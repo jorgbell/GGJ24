@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+public enum JUGGLESTATE { ON_AIR, THROWN, AVAILABLE, ON_FLOOR };
+
 public class Juggle : MonoBehaviour
 {
     [SerializeField] float minTravelTime = 4f, maxTravelTime = 4f;
@@ -10,11 +13,20 @@ public class Juggle : MonoBehaviour
     [SerializeField] PointsManager pointsManager;
 
     private float __travelTime = 0f, __maxTravelHeight = 0f;
+    public PlayerController PlayerController;
     private Vector3 __targetPosition;
     private float __elapsedTime;
+    public JUGGLESTATE state = JUGGLESTATE.AVAILABLE;
 
-    public void setTargetPosition(Vector3 targetPosition, bool isFrontalThrow = false)
+    public void SetPlayer(PlayerController playerController)
     {
+        PlayerController = playerController;
+    }
+
+    public void setTargetPosition(Vector3 targetPosition, Vector3 startingPosition, bool isFrontalThrow = false)
+    {
+       this.transform.position = startingPosition;
+
         // isFrontalThrow is meant to indicate whether or not it's launched to a player.
         __travelTime = Random.Range(minTravelTime, maxTravelTime);
         __maxTravelHeight = Random.Range(minHeight, maxHeight);
@@ -33,10 +45,11 @@ public class Juggle : MonoBehaviour
         __elapsedTime = 0.0f;
         float peakTime = __travelTime * 0.5f;
         Vector3 startingPosition = transform.position;
+        state = JUGGLESTATE.ON_AIR;
 
         while (__elapsedTime < __travelTime)
         {
-            //Aquí hay un bug. Si la bola spawnea a cierta altura, digamos a 1ud de altura. Con esta fórmula núnca llegará a bajar de 1ud cuando esté bajando por "gravedad"
+            //Aquï¿½ hay un bug. Si la bola spawnea a cierta altura, digamos a 1ud de altura. Con esta fï¿½rmula nï¿½nca llegarï¿½ a bajar de 1ud cuando estï¿½ bajando por "gravedad"
             float height = Mathf.Lerp(0, __maxTravelHeight, 1 - Mathf.Pow((__elapsedTime - peakTime) / peakTime, 2));
 
             transform.position = new Vector3(
@@ -50,7 +63,8 @@ public class Juggle : MonoBehaviour
 
             yield return null;
         }
-
+        
+        state = JUGGLESTATE.ON_FLOOR;
         transform.position = __targetPosition;
         pointsManager.dropBall(0);
     }
