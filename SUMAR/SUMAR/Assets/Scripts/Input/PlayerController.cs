@@ -24,8 +24,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float tauntTime;
     private SpriteRenderer spriteRenderer; //CAMBIARPORANIMACION
 
-    [Header("Other")]
-    public PlayerActions playerInput;
     [Header("Animations")]
     [SerializeField] Animator animator;
 
