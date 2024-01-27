@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1311618398613296143}
-  - component: {fileID: 8593823375189108223}
   - component: {fileID: 7550338112876353464}
   - component: {fileID: 5485132102365030772}
   - component: {fileID: 4785735029774199813}
@@ -38,22 +37,6 @@ Transform:
   - {fileID: 8873449985092997489}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8593823375189108223
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1730155545130983299}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 325a7a029295e3e479517c9811c37073, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  juggleArea: {fileID: 3173146476064886415}
-  juggle: {fileID: -6344840808749276720, guid: 76527145e20a4224fbb609984dfdc005, type: 3}
-  juggleParent: {fileID: 0}
-  juggleSpawnPoint: {fileID: 3417294814582324916}
 --- !u!114 &7550338112876353464
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70,7 +53,9 @@ MonoBehaviour:
   dashSpeed: 30
   dashTime: 0.1
   dashCooldownTime: 1
-  animator: {fileID: 7073712425018367552}
+  maxJuggleAmmo: 5
+  juggleArea: {fileID: 3173146476064886415}
+  jugglePrefab: {fileID: -6344840808749276720, guid: 76527145e20a4224fbb609984dfdc005, type: 3}
   playerID: 0
 --- !u!114 &5485132102365030772
 MonoBehaviour:
@@ -356,7 +341,7 @@ Transform:
   m_GameObject: {fileID: 4734137862589408896}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 17.462753, y: 1.429102, z: -30.09682}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

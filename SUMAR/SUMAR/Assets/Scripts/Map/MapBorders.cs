@@ -37,7 +37,7 @@ public class MapBorders : MonoBehaviour
 		Instance = this;
 	}
 
-	public bool CheckPositionOutOfBorders(Vector2 point)
+	public bool CheckPositionInBorders(Vector2 point)
 	{
 		return point.x >= -leftBorder && point.x <= rightBorder && point.y >= -bottomBorder && point.y <= topBorder;
 	}

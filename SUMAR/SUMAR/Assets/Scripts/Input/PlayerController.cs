@@ -23,6 +23,14 @@ public class PlayerController : MonoBehaviour
     [Header("Animations")]
     [SerializeField] Animator animator;
 
+    [Header("Juggle")]
+    [SerializeField] int maxJuggleAmmo = 5;
+    private int juggleAmmo;
+    private List<Juggle> playerJuggles = new List<Juggle>();
+    [SerializeField] JuggleArea juggleArea;
+    [SerializeField] Juggle jugglePrefab;
+
+    public PlayerActions playerInput;
     private Vector3 axisvalue = new Vector3();
     private Queue<INPUTACTIONS> inputQueue = new Queue<INPUTACTIONS>();
 
@@ -50,6 +58,14 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         transform.position = MapBorders.Instance.GetRandomPositionInArea(transform.position.y);
+        juggleAmmo = maxJuggleAmmo;
+
+        for (int i = 0; i < maxJuggleAmmo; i++)
+        {
+            Juggle instantiatedJuggle = Instantiate(jugglePrefab, Vector3.zero, Quaternion.identity);
+            instantiatedJuggle.SetPlayer(this);
+            playerJuggles.Add(instantiatedJuggle);
+        }
     }
 
     private void OnEnable()
@@ -77,7 +93,12 @@ public class PlayerController : MonoBehaviour
                     Debug.Log(catchedInput.ToString());
                     break;
                 case INPUTACTIONS.THROW:
-                    Debug.Log(catchedInput.ToString());
+                    Juggle? juggleToThrow = GetAvailableJuggle();
+
+                    if(juggleToThrow == null) break;
+
+                    Vector3 juggleTargetPosition = GetJugglePosition();
+                    juggleToThrow.setTargetPosition(juggleTargetPosition, this.transform.position, false);
                     break;
                 case INPUTACTIONS.DASH:
                     Debug.Log(catchedInput.ToString());
@@ -103,6 +124,28 @@ public class PlayerController : MonoBehaviour
             HandleMovement();
         }
 	}
+
+    private Vector3 GetJugglePosition() //This little maneuver is going to cost us 100000 years.
+    {
+        Vector3 positionCandidate = juggleArea.SelectPoint();
+        if(MapBorders.Instance.CheckPositionInBorders(positionCandidate) == true)
+        {
+            return positionCandidate + this.transform.position; // A veces una chica
+        }
+
+        return GetJugglePosition();
+    }
+
+    private Juggle? GetAvailableJuggle()
+    {
+        for(int k = 0; k < maxJuggleAmmo; k++)
+        {
+            Juggle juggle = playerJuggles[k];
+            if(juggle.state == JUGGLESTATE.AVAILABLE) return juggle;
+        }
+
+        return null;
+    }
 
     public void EnqueueActionInput(InputAction.CallbackContext ctx, INPUTACTIONS input)
     {
