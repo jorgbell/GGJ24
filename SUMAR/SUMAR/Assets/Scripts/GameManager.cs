@@ -13,7 +13,15 @@ public class GameManager : MonoBehaviour
     {
         get { return instance; }
     }
-    public CameraEffects cameraEffects;
+
+
+
+	private int playerId = 0;
+
+
+	public CameraEffects cameraEffects;
+    
+    
     private void Awake()
     {
         if (instance == null)
@@ -27,22 +35,20 @@ public class GameManager : MonoBehaviour
             instance.cameraEffects = cameraEffects;
             Destroy(gameObject);
         }
-
-
-
     }
 
-    private int playerId = 0;
+	private void Start()
+	{
+        AudioManager.instance.Play("menu");
+	}
 
-    private void Start()
-    {
-    }
-    public void LoadScene(string sceneName)
+	public void LoadScene(string sceneName)
     {
 
         if (SceneExists(sceneName))
-        {
-            StartCoroutine(LoadSceneAsync(sceneName));
+		{
+            AudioManager.instance.StopAll();
+			StartCoroutine(LoadSceneAsync(sceneName));
         }
         else
         {
@@ -75,6 +81,16 @@ public class GameManager : MonoBehaviour
             Debug.Log("Cargando escena " + sceneName + " - Progreso: " + (progress * 100) + "%");
 
             yield return null;
+        }
+
+        yield return new WaitForSeconds(0.2f);
+        if (Random.Range(0, 2) == 0)
+        {
+            AudioManager.instance.Play("ost1");
+        }
+        else
+        {
+            AudioManager.instance.Play("ost2");
         }
     }
 

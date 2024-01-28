@@ -30,6 +30,7 @@ public class AudioManager : MonoBehaviour
             s.source.pitch = s.minPitch;
             s.source.volume = s.volume;
             s.source.loop = s.loop;
+            s.source.playOnAwake = false;
         }
     }
 
@@ -51,6 +52,7 @@ public class AudioManager : MonoBehaviour
         {
             s.source.pitch = UnityEngine.Random.Range(s.minPitch, s.maxPitch);
         }
+        Debug.Log(name);
         s.source.Play();
     }
 
@@ -64,6 +66,14 @@ public class AudioManager : MonoBehaviour
 
         }
         if (s.source.isPlaying) s.source.Stop();
+    }
+
+    public void StopAll()
+    {
+        foreach(var s in sounds)
+        {
+            s.source.Stop();
+        }
     }
 
 }

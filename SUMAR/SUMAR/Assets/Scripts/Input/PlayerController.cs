@@ -70,11 +70,12 @@ public class PlayerController : MonoBehaviour
 
         playerID = GameManager.Instance.getPlayerId();
 
+        Vector3 spawnPoint = MapBorders.Instance.GetSpawnPoint(playerID).position;
+		transform.position = new Vector3(spawnPoint.x, transform.position.y, spawnPoint.z);
     }
 
     private void Start()
     {
-        transform.position = MapBorders.Instance.GetRandomPositionInArea(transform.position.y);
         juggleAmmo = maxJuggleAmmo;
 
         for (int i = 0; i < maxJuggleAmmo; i++)
@@ -106,6 +107,7 @@ public class PlayerController : MonoBehaviour
             {
                 case INPUTACTIONS.ATTACK:                    
 					animator.SetTrigger("attack");
+					AudioManager.instance.Play("goofyass3");
 					break;
                 case INPUTACTIONS.CATCH:
                     if (__targetPickupArea == null) break;
@@ -127,8 +129,9 @@ public class PlayerController : MonoBehaviour
 
                     pointsManager.throwBall(playerID);
 					animator.SetTrigger("hurl");
+					AudioManager.instance.Play("hurl");
 
-                    break;
+					break;
                 case INPUTACTIONS.DASH:
                     OnDash();
 					break;
@@ -137,6 +140,7 @@ public class PlayerController : MonoBehaviour
                     break;
                 case INPUTACTIONS.PAUSE:
 					animator.SetTrigger("hit"); //TODO: provisional para hacer test
+					AudioManager.instance.Play("goofyass4");
 					break;
                 default:
                     break;
@@ -207,7 +211,8 @@ public class PlayerController : MonoBehaviour
 			animator.SetBool("isInDash", true);
 			m_initialDashTime = Time.time;
             m_dashDirection = axisvalue;
-        }
+			AudioManager.instance.Play("dash");
+		}
 	}
     public void OnTaunt()
     {
@@ -216,7 +221,8 @@ public class PlayerController : MonoBehaviour
             m_isInTaunt = true;
 			animator.SetBool("isInTaunt", true);
 			m_initialTauntTime = Time.time;
-        }
+			AudioManager.instance.Play("goofyass2");
+		}
     }
 
     private void HandleMovement()
