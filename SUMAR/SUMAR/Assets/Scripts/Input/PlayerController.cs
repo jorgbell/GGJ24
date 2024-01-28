@@ -25,6 +25,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float tauntTime;
     private SpriteRenderer spriteRenderer; //CAMBIARPORANIMACION
 
+    [Header("Taunt")]
+    [SerializeField] float stunTime;
+
     [Header("Animations")]
     [SerializeField] Animator animator;
     [SerializeField] AnimatorController[] playerControllers;
@@ -53,6 +56,9 @@ public class PlayerController : MonoBehaviour
 
     bool m_isInTaunt = false;
     float m_initialTauntTime;
+
+    bool m_isStunned = false;
+    float m_initialStunTime;
 
     private void Awake()
     {
@@ -154,9 +160,9 @@ public class PlayerController : MonoBehaviour
 
                     pointsManager.throwBall(playerID);
 					animator.SetTrigger("hurl");
-					AudioManager.instance.Play("hurl");
+					if(playerID == 0) AudioManager.instance.Play("p1_throw"); else AudioManager.instance.Play("p2_throw");
 
-					break;
+                    break;
                 case INPUTACTIONS.DASH:
                     OnDash();
 					break;
@@ -181,8 +187,11 @@ public class PlayerController : MonoBehaviour
 		}
 
 
+        if (m_isStunned){
 
-		if (m_isInTaunt)
+            HandleStun();
+
+        }else if (m_isInTaunt)
         {
             HandleTaunt();
 
@@ -245,7 +254,7 @@ public class PlayerController : MonoBehaviour
 			animator.SetBool("isInDash", true);
 			m_initialDashTime = Time.time;
             m_dashDirection = axisvalue;
-			AudioManager.instance.Play("dash");
+            if (playerID == 0) AudioManager.instance.Play("p1_dash"); else AudioManager.instance.Play("p2_dash");
             GameManager.Instance.cameraEffects.shakeDuration = 2;
 		}
 	}
@@ -256,7 +265,7 @@ public class PlayerController : MonoBehaviour
             m_isInTaunt = true;
 			animator.SetBool("isInTaunt", true);
 			m_initialTauntTime = Time.time;
-			AudioManager.instance.Play("goofyass2");
+			AudioManager.instance.Play("taunt");
 		}
     }
 
@@ -285,7 +294,8 @@ public class PlayerController : MonoBehaviour
 			scale.x *= -1;
             transform.localScale = scale;
 		}
-	}
+        
+    }
 
     private void HandleDash()
     {
@@ -310,6 +320,15 @@ public class PlayerController : MonoBehaviour
         if (isJuggle)
         {
             bool hasBeenShootWithJuggle = juggleProjectile.TryReceiveShot(playerID);
+
+            if (hasBeenShootWithJuggle)
+            {
+                m_isStunned = true;
+                m_initialStunTime = Time.time;
+                animator.SetTrigger("hit");
+                AudioManager.instance.Play("goofyass4");
+            }
+
         }
     }
 
@@ -345,6 +364,15 @@ public class PlayerController : MonoBehaviour
             m_isInTaunt = false;
 			animator.SetBool("isInTaunt", false);
 			return;
+        }
+    }
+
+    private void HandleStun()
+    {
+        if (m_initialStunTime + stunTime < Time.time)
+        {
+            m_isStunned = false;
+            return;
         }
     }
 }

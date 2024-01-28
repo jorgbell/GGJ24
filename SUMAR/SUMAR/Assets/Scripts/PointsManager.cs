@@ -30,6 +30,7 @@ public class PointsManager : MonoBehaviour
         points[playerIndex] += airborneBalls[playerIndex];
 
         airborneBalls[playerIndex]--;
+        airborneBalls[playerIndex] = Mathf.Max(airborneBalls[playerIndex], 0);
         updateUI();
 
         if(points[playerIndex] >= maxPoints)
@@ -43,6 +44,7 @@ public class PointsManager : MonoBehaviour
     {
         Debug.Log("se cayó " + airborneBalls[playerIndex]);
         airborneBalls[playerIndex]--;
+        airborneBalls[playerIndex] = Mathf.Max(airborneBalls[playerIndex], 0);
         points[playerIndex] -= 1;
         points[playerIndex] = Mathf.Max(points[playerIndex], 0);
         updateUI();

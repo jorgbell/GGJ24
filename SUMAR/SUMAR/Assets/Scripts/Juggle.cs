@@ -37,6 +37,7 @@ public class Juggle : MonoBehaviour
     {
         __playerController = playerController;
         __playerID = playerController.playerID;
+        jugglePickupArea.SetPlayerId(__playerID);
     }
 
     public void Shoot(Vector3 startingPosition, Vector3 direction)
@@ -124,6 +125,13 @@ public class Juggle : MonoBehaviour
         pointsManager.dropBall(__playerID);
         jugglePickupArea.OnJuggleDropped();
         juggleBall.transform.position = __targetPosition;
+
+        if(Random.Range(0,2)==0)
+            AudioManager.instance.Play("p1_fail"); 
+        else
+            AudioManager.instance.Play("p2_fail");
+
+
     }
 
     public void PickUpFromAir()
@@ -133,6 +141,9 @@ public class Juggle : MonoBehaviour
 
         StopCoroutine(travelCoroutine);
         travelCoroutine = null;
+
+        if (__playerController.playerID == 0) AudioManager.instance.Play("p1_catch"); else AudioManager.instance.Play("p2_catch");
+
     }
 
     public void TryPickupFromFloor(int playerID)
