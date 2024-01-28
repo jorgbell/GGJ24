@@ -185,12 +185,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 799bbedb8f51f064b9f5349aecae010b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minTravelTime: 0.5
-  maxTravelTime: 1
+  minTravelTime: 1.5
+  maxTravelTime: 3
   shootSpeed: 20
   pickupThreshold: 0.9
-  minHeight: 3
-  maxHeight: 7
+  minHeight: 4
+  maxHeight: 6
   jugglePickupArea: {fileID: 70534135053686568}
   juggleBall: {fileID: 2596576173153625384}
   sprite: {fileID: 3571707978759997350}
