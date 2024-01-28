@@ -134,6 +134,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &193144852 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1150357665991951415, guid: 2b7e94ce6e5c3264eb95cb7a35fafd24, type: 3}
+  m_PrefabInstance: {fileID: 8395988162672130394}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &314029699
 GameObject:
   m_ObjectHideFlags: 0
@@ -709,6 +714,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraEffects: {fileID: 335838113}
+  spawnPoints:
+  - {fileID: 193144852}
+  - {fileID: 1845077681}
 --- !u!4 &898495943
 Transform:
   m_ObjectHideFlags: 0
@@ -884,6 +892,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1845077681 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4778930054523245736, guid: 2b7e94ce6e5c3264eb95cb7a35fafd24, type: 3}
+  m_PrefabInstance: {fileID: 8395988162672130394}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1993502344
 PrefabInstance:
   m_ObjectHideFlags: 0

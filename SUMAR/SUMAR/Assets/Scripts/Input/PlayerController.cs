@@ -70,11 +70,12 @@ public class PlayerController : MonoBehaviour
 
         playerID = GameManager.Instance.getPlayerId();
 
+        Vector3 spawnPoint = GameManager.Instance.GetSpawnPoint(playerID).position;
+		transform.position = new Vector3(spawnPoint.x, transform.position.y, spawnPoint.z);
     }
 
     private void Start()
     {
-        transform.position = MapBorders.Instance.GetRandomPositionInArea(transform.position.y);
         juggleAmmo = maxJuggleAmmo;
 
         for (int i = 0; i < maxJuggleAmmo; i++)
