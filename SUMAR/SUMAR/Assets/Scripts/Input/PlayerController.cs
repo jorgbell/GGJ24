@@ -70,7 +70,7 @@ public class PlayerController : MonoBehaviour
 
         playerID = GameManager.Instance.getPlayerId();
 
-        Vector3 spawnPoint = GameManager.Instance.GetSpawnPoint(playerID).position;
+        Vector3 spawnPoint = MapBorders.Instance.GetSpawnPoint(playerID).position;
 		transform.position = new Vector3(spawnPoint.x, transform.position.y, spawnPoint.z);
     }
 

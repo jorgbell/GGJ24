@@ -13,6 +13,9 @@ public class MapBorders : MonoBehaviour
 	[SerializeField] private float bottomBorder;
 
 
+	[SerializeField] private Transform[] spawnPoints;
+
+
 	public static MapBorders Instance;
 
 	private void OnDrawGizmos()
@@ -75,4 +78,13 @@ public class MapBorders : MonoBehaviour
 		return new Vector3(z, y, x);
 	}
 
+	public Transform GetSpawnPoint(int id)
+	{
+		if (id < spawnPoints.Length)
+		{
+			return spawnPoints[id];
+		}
+
+		return null;
+	}
 }

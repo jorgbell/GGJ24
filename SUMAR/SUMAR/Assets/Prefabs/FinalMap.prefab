@@ -63,6 +63,9 @@ MonoBehaviour:
   rightBorder: 10.9
   topBorder: 5.69
   bottomBorder: 4.37
+  spawnPoints:
+  - {fileID: 1150357665991951415}
+  - {fileID: 4778930054523245736}
 --- !u!1 &6749839323033966536
 GameObject:
   m_ObjectHideFlags: 0

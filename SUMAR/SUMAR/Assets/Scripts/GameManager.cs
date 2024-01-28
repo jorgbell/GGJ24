@@ -20,7 +20,6 @@ public class GameManager : MonoBehaviour
 
 
 	public CameraEffects cameraEffects;
-    [SerializeField] private Transform[] spawnPoints;
     
     
     private void Awake()
@@ -85,15 +84,5 @@ public class GameManager : MonoBehaviour
     public int getPlayerId() {
 
         return playerId++;
-    }
-
-    public Transform GetSpawnPoint(int id)
-    {
-        if(id < spawnPoints.Length)
-        {
-            return spawnPoints[id];
-        }
-
-        return null;
     }
 }
