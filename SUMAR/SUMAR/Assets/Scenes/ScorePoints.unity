@@ -644,7 +644,7 @@ GameObject:
   - component: {fileID: 464721849}
   - component: {fileID: 464721848}
   m_Layer: 5
-  m_Name: bar
+  m_Name: barimgp1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -855,8 +855,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49343f63d18464446aeab5ed722c7a2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointsImage: []
-  pointsRightBorder: []
+  pointsImage:
+  - {fileID: 464721848}
+  - {fileID: 1045473590}
+  pointsRightBorder:
+  - {fileID: 1119197908}
+  - {fileID: 1231038122}
   maxPoints: 50
 --- !u!4 &945701203
 Transform:
@@ -885,7 +889,7 @@ GameObject:
   - component: {fileID: 1045473591}
   - component: {fileID: 1045473590}
   m_Layer: 5
-  m_Name: bar
+  m_Name: barimgp2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -960,7 +964,7 @@ GameObject:
   - component: {fileID: 1062725978}
   - component: {fileID: 1062725977}
   m_Layer: 5
-  m_Name: leftEnd
+  m_Name: leftEndp1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1035,7 +1039,7 @@ GameObject:
   - component: {fileID: 1119197909}
   - component: {fileID: 1119197908}
   m_Layer: 5
-  m_Name: rightEnd
+  m_Name: rightEndp1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1187,7 +1191,7 @@ GameObject:
   - component: {fileID: 1231038123}
   - component: {fileID: 1231038122}
   m_Layer: 5
-  m_Name: rightEnd
+  m_Name: rightEndp2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1443,7 +1447,7 @@ GameObject:
   - component: {fileID: 1363289297}
   - component: {fileID: 1363289296}
   m_Layer: 5
-  m_Name: leftEnd
+  m_Name: leftEndp2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
