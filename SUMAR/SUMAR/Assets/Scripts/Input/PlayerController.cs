@@ -282,14 +282,7 @@ public class PlayerController : MonoBehaviour
 			scale.x *= -1;
             transform.localScale = scale;
 		}
-        if (playerID == 0)
-        {
-                AudioManager.instance.Play("p1_step");
-        }
-        else
-        {
-                AudioManager.instance.Play("p2_step");
-        }
+        
     }
 
     private void HandleDash()
