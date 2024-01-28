@@ -67,6 +67,9 @@ public class PlayerController : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
 
         pointsManager = GameObject.FindWithTag("PointsManager").GetComponent<PointsManager>();
+
+        playerID = GameManager.Instance.getPlayerId();
+
     }
 
     private void Start()

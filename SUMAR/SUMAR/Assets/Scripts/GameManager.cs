@@ -26,6 +26,8 @@ public class GameManager : MonoBehaviour
 
     }
 
+    private int playerId = 0;
+
     private void Start()
     {
         //if (Random.Range(0, 2) == 0)
@@ -74,5 +76,8 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public int getPlayerId() {
 
+        return playerId++;
+    }
 }
