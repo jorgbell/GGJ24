@@ -37,6 +37,7 @@ public class Juggle : MonoBehaviour
     {
         __playerController = playerController;
         __playerID = playerController.playerID;
+        jugglePickupArea.SetPlayerId(__playerID);
     }
 
     public void Shoot(Vector3 startingPosition, Vector3 direction)
