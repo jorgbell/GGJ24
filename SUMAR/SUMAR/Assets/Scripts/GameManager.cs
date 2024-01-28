@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -20,6 +21,8 @@ public class GameManager : MonoBehaviour
 
 
 	public CameraEffects cameraEffects;
+
+    [SerializeField] private GameObject controls;
     
     
     private void Awake()
@@ -40,6 +43,14 @@ public class GameManager : MonoBehaviour
 	private void Start()
 	{
         AudioManager.instance.Play("menu");
+	}
+
+	private void Update()
+	{
+        if (Input.GetKeyDown(KeyCode.Escape) && controls.activeSelf)
+        {
+            ToggleControls();
+		}
 	}
 
 	public void LoadScene(string sceneName)
@@ -98,4 +109,22 @@ public class GameManager : MonoBehaviour
 
         return playerId++;
     }
+
+    public void ToggleControls()
+    {
+        if(controls != null)
+        {
+            controls.SetActive(!controls.activeSelf);
+        }
+    }
+
+	public void QuitGame()
+	{
+#if UNITY_EDITOR
+		EditorApplication.ExitPlaymode(); ;
+#else
+		Application.Quit();
+#endif
+	}
+
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Xml;
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -26,6 +27,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Animations")]
     [SerializeField] Animator animator;
+    [SerializeField] AnimatorController[] playerControllers;
 
     [Header("Juggle")]
     [SerializeField] int maxJuggleAmmo = 5;
@@ -71,8 +73,9 @@ public class PlayerController : MonoBehaviour
         pointsManager = GameObject.FindWithTag("PointsManager").GetComponent<PointsManager>();
 
         playerID = GameManager.Instance.getPlayerId();
+        animator.runtimeAnimatorController = playerControllers[playerID];
 
-        Vector3 spawnPoint = MapBorders.Instance.GetSpawnPoint(playerID).position;
+		Vector3 spawnPoint = MapBorders.Instance.GetSpawnPoint(playerID).position;
 		transform.position = new Vector3(spawnPoint.x, transform.position.y, spawnPoint.z);
     }
 
@@ -100,7 +103,8 @@ public class PlayerController : MonoBehaviour
 
 
     private void Update()
-    {
+    {       
+
         INPUTACTIONS catchedInput;
         while (inputQueue.TryDequeue(out catchedInput))
         {
@@ -157,15 +161,25 @@ public class PlayerController : MonoBehaviour
                     OnTaunt();
                     break;
                 case INPUTACTIONS.PAUSE:
-					animator.SetTrigger("hit"); //TODO: provisional para hacer test
-					AudioManager.instance.Play("goofyass4");
+                    Debug.Log(catchedInput.ToString());
+					//animator.SetTrigger("hit"); //TODO: provisional para hacer test
+					//AudioManager.instance.Play("goofyass4");
+
+                    MenuPausa.Instance.ToggleMenu();
 					break;
                 default:
                     break;
             }
         }
 
-        if (m_isInTaunt)
+		if (Time.timeScale == 0.0f)
+		{
+			return;
+		}
+
+
+
+		if (m_isInTaunt)
         {
             HandleTaunt();
 
@@ -222,14 +236,14 @@ public class PlayerController : MonoBehaviour
 
     public void OnDash()
     {
-        if (!m_isInDash && Time.time > m_endDashTime + dashCooldownTime && !m_isInTaunt)
+        if (isRunning && !m_isInDash && Time.time > m_endDashTime + dashCooldownTime && !m_isInTaunt)
         {
-            GameManager.Instance.cameraEffects.shakeDuration = 2;
             m_isInDash = true;
 			animator.SetBool("isInDash", true);
 			m_initialDashTime = Time.time;
             m_dashDirection = axisvalue;
 			AudioManager.instance.Play("dash");
+            GameManager.Instance.cameraEffects.shakeDuration = 2;
 		}
 	}
     public void OnTaunt()
@@ -243,14 +257,18 @@ public class PlayerController : MonoBehaviour
 		}
     }
 
+    bool isRunning = false;
     private void HandleMovement()
 	{
         if(axisvalue == Vector3.zero)
         {
-            animator.SetBool("isRunning", false);
+            isRunning = false;
+			animator.SetBool("isRunning", isRunning);
 			return;
 		}
-		animator.SetBool("isRunning", true);
+
+        isRunning = true;
+		animator.SetBool("isRunning", isRunning);
 
 		Vector3 finalPosition = this.transform.position + (new Vector3(axisvalue.x, 0, axisvalue.y)).normalized * movementSpeed * Time.deltaTime;
 
