@@ -187,6 +187,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minTravelTime: 1.5
   maxTravelTime: 3
+  shootSpeed: 20
   pickupThreshold: 0.9
   minHeight: 4
   maxHeight: 6
