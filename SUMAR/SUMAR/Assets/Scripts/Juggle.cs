@@ -50,16 +50,16 @@ public class Juggle : MonoBehaviour
 
     IEnumerator TravelToTarget()
     {
-        __elapsedTime = 0.0f;
+        elapsedTime = 0.0f;
         float peakTime = __travelTime * 0.5f;
         Vector3 startingPosition = transform.position;
         sprite.enabled = true;
         state = JUGGLESTATE.ON_AIR;
 
-        while (__elapsedTime < __travelTime)
+        while (elapsedTime < __travelTime)
         {
             //Aqu� hay un bug. Si la bola spawnea a cierta altura, digamos a 1ud de altura. Con esta f�rmula n�nca llegar� a bajar de 1ud cuando est� bajando por "gravedad"
-            float height = Mathf.Lerp(0, __maxTravelHeight, 1 - Mathf.Pow((__elapsedTime - peakTime) / peakTime, 2));
+            float height = Mathf.Lerp(0, __maxTravelHeight, 1 - Mathf.Pow((elapsedTime - peakTime) / peakTime, 2));
 
             juggleBall.transform.position = new Vector3(
                 Mathf.Lerp(startingPosition.x, __targetPosition.x, elapsedTime / __travelTime),
@@ -67,7 +67,7 @@ public class Juggle : MonoBehaviour
 				Mathf.Lerp(startingPosition.z, __targetPosition.z, elapsedTime / __travelTime)
 			);
 
-            __elapsedTime += Time.deltaTime;
+            elapsedTime += Time.deltaTime;
 
             if (elapsedTime > __travelTime * pickupThreshold && jugglePickupArea.state == JUGGLEPICKUPAREASTATE.IDLE) jugglePickupArea.SetPickable();
 
@@ -100,14 +100,5 @@ public class Juggle : MonoBehaviour
 	{
         Gizmos.color = Color.green;
         Gizmos.DrawSphere(__targetPosition, 0.2f);
-    }
-
-    public bool isFalling() {
-        return (__elapsedTime > __travelTime / 2) && !isOnFloor();
-    }
-
-    public bool isOnFloor()
-    {
-        return __elapsedTime >= __travelTime;
     }
 }

@@ -5,36 +5,43 @@ using UnityEngine.UI;
 
 public class PointsManager : MonoBehaviour
 {
-    [SerializeField] private Image pointsImage;
-    [SerializeField] private Image pointsRightBorder;
+    [SerializeField] private Image[] pointsImage;
+    [SerializeField] private Image[] pointsRightBorder;
 
-    private int points = 0;
-    private int airborneBalls = 0;
+    private int[] points = new int[]{0,0};
+    private int[] airborneBalls = new int[] { 0, 0 };
 
-    private int maxPoints = 50;
+    [SerializeField] private int maxPoints = 50;
 
 	private void Start()
 	{
-        pointsImage.transform.localScale = new Vector3((float)points / maxPoints, 1,1);
-        pointsRightBorder.rectTransform.pivot = new Vector2(1f - (float)points / maxPoints, 0.5f);
+        updateUI();
     }
 
 	public void throwBall(int playerIndex)
     {
-        airborneBalls++;
+        airborneBalls[playerIndex]++;
     }
 
     public void catchBall(int playerIndex)
     {
-        points += airborneBalls;
-        airborneBalls--;
-        pointsImage.rectTransform.localScale = new Vector3((float)points / maxPoints - 0.005f, 1, 1);
-        pointsRightBorder.rectTransform.pivot = new Vector2(1f - (float)points / maxPoints, 0.5f);
+        points[playerIndex] += airborneBalls[playerIndex];
+        airborneBalls[playerIndex]--;
+        updateUI();
     }
 
     public void dropBall(int playerIndex)
     {
-        airborneBalls--;
-        Debug.Log("se cayó la bola");
+        airborneBalls[playerIndex]--;
+        points[playerIndex] -= 2;
+        updateUI();
+    }
+
+    private void updateUI() {
+        for (int i = 0; i < 2; i++)
+        {
+            pointsImage[i].transform.localScale = new Vector3((float)points[i] / maxPoints, 1, 1);
+            pointsRightBorder[i].rectTransform.pivot = new Vector2(1f - (float)points[i] / maxPoints, 0.5f);
+        }
     }
 }

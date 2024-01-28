@@ -101,8 +101,6 @@ public class PlayerController : MonoBehaviour
             {
                 case INPUTACTIONS.ATTACK:
 
-                    pointsManager.dropBall(playerID);
-
                     Debug.Log(catchedInput.ToString());
                     break;
                 case INPUTACTIONS.CATCH:
@@ -111,12 +109,10 @@ public class PlayerController : MonoBehaviour
                     bool pickedUpJuggle = __targetPickupArea.TryPickup(playerID);
                     if(pickedUpJuggle) {
                         juggleAmmo++;
-                        // Otorgar puntos imaginarios aquí
+                        pointsManager.catchBall(playerID);
                     }
                     break;
                 case INPUTACTIONS.THROW:
-
-                    pointsManager.throwBall(playerID);
 
                     Juggle? juggleToThrow = GetAvailableJuggle();
 
@@ -124,6 +120,8 @@ public class PlayerController : MonoBehaviour
 
                     Vector3 juggleTargetPosition = GetJugglePosition();
                     juggleToThrow.setTargetPosition(juggleTargetPosition, this.transform.position, false);
+                    pointsManager.throwBall(playerID);
+
                     break;
                 case INPUTACTIONS.DASH:
                     Debug.Log(catchedInput.ToString());
