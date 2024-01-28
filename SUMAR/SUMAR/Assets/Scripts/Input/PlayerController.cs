@@ -262,6 +262,7 @@ public class PlayerController : MonoBehaviour
             m_isInTaunt = true;
 			animator.SetBool("isInTaunt", true);
 			m_initialTauntTime = Time.time;
+            pointsManager.taunt(playerID);
 			AudioManager.instance.Play("goofyass2");
 		}
     }

@@ -8,6 +8,8 @@ public class PointsManager : MonoBehaviour
     [SerializeField] private Image[] pointsImage;
     [SerializeField] private Image[] pointsRightBorder;
 
+    [SerializeField] private int pointsPerTaunt = 2;
+
     private int[] points = new int[]{0,0};
     private int[] airborneBalls = new int[] { 0, 0 };
 
@@ -41,6 +43,12 @@ public class PointsManager : MonoBehaviour
         airborneBalls[playerIndex] = Mathf.Max(airborneBalls[playerIndex], 0);
         points[playerIndex] -= 1;
         points[playerIndex] = Mathf.Max(points[playerIndex], 0);
+        updateUI();
+    }
+
+    public void taunt(int playerIndex)
+    {
+        points[playerIndex] += pointsPerTaunt;
         updateUI();
     }
 
