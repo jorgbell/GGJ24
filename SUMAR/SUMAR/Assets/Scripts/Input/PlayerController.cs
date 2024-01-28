@@ -180,7 +180,8 @@ public class PlayerController : MonoBehaviour
         if (!m_isInDash && Time.time > m_endDashTime + dashCooldownTime && !m_isInTaunt)
         {
             m_isInDash = true;
-            m_initialDashTime = Time.time;
+			animator.SetBool("isInDash", true);
+			m_initialDashTime = Time.time;
             m_dashDirection = axisvalue;
         }
 	}
@@ -199,7 +200,6 @@ public class PlayerController : MonoBehaviour
         if(axisvalue == Vector3.zero)
         {
             animator.SetBool("isRunning", false);
-
 			return;
 		}
 		animator.SetBool("isRunning", true);
@@ -222,10 +222,12 @@ public class PlayerController : MonoBehaviour
         {
             m_isInDash = false;
 			m_endDashTime = Time.time;
-			return;
-        }
 
-        Vector3 finalPosition = this.transform.position + (new Vector3(m_dashDirection.x, 0, m_dashDirection.y)).normalized * dashSpeed * Time.deltaTime;
+			animator.SetBool("isInDash", false);
+			return;
+		}
+
+		Vector3 finalPosition = this.transform.position + (new Vector3(m_dashDirection.x, 0, m_dashDirection.y)).normalized * dashSpeed * Time.deltaTime;
 
 		this.transform.position = MapBorders.Instance.ClampVectorToArea(finalPosition);
 	}
