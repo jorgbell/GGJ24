@@ -194,6 +194,7 @@ MonoBehaviour:
   jugglePickupArea: {fileID: 70534135053686568}
   juggleBall: {fileID: 2596576173153625384}
   sprite: {fileID: 3571707978759997350}
+  __playerID: 0
   state: 2
 --- !u!1 &8530893653364843298
 GameObject:
@@ -268,12 +269,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 3c5fa399ee33c844f90bf3d53ed88325, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 851cf0c159127134b8f507af9061c912, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 5, y: 5}
+  m_Size: {x: 54.85714, y: 30.857141}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -307,7 +308,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -0.11}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 3550593887457717851}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
@@ -352,8 +353,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 3a32390d7024c5d48b1a0c3a003dd026, type: 3}
-  m_Color: {r: 0.8490566, g: 0.11614456, b: 0.11614456, a: 1}
+  m_Sprite: {fileID: 21300000, guid: b36f78cb1d49a224e9f065a64f8fa8df, type: 3}
+  m_Color: {r: 0.8509804, g: 0.7949324, b: 0.117647074, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
