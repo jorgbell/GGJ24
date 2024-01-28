@@ -16,7 +16,7 @@ public class Juggle : MonoBehaviour
     [SerializeField] SpriteRenderer sprite;
 
     private float __travelTime = 0f, __maxTravelHeight = 0f;
-    private PlayerController PlayerController;
+    private PlayerController __playerController;
     private int __playerID;
     private Vector3 __targetPosition;
     private float elapsedTime;
@@ -33,10 +33,10 @@ public class Juggle : MonoBehaviour
         sprite.enabled = false;
     }
 
-    public void SetPlayer(int playerID)
+    public void SetPlayer(PlayerController playerController)
     {
-        __playerID = playerID;
-        jugglePickupArea.SetPlayerId(playerID);
+        __playerController = playerController;
+        __playerID = __playerController.playerID;
     }
 
     public void Shoot(Vector3 startingPosition, Vector3 direction)
@@ -63,11 +63,14 @@ public class Juggle : MonoBehaviour
 
     public bool TryReceiveShot(int playerID)
     {
-        if (playerID == __playerID) return false;
+        if (playerID == __playerID || state != JUGGLESTATE.THROWN) return false;
 
         sprite.enabled = false;
         state=JUGGLESTATE.AVAILABLE;
         StopCoroutine(shootCoroutine);
+
+        Vector3 newJugglePosition = __playerController.GetJugglePosition();
+        setTargetPosition(newJugglePosition, transform.position);
 
         return true;
     }
