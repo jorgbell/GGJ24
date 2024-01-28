@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
     private List<Juggle> playerJuggles = new List<Juggle>();
     [SerializeField] JuggleArea juggleArea;
     [SerializeField] Juggle jugglePrefab;
+    private JugglePickupArea __targetPickupArea = null; //JANKY AF ESPERO QUE NO DE PROBLEMAS
 
     public PlayerActions playerInput;
     private Vector3 axisvalue = new Vector3();
@@ -58,7 +59,7 @@ public class PlayerController : MonoBehaviour
         for (int i = 0; i < maxJuggleAmmo; i++)
         {
             Juggle instantiatedJuggle = Instantiate(jugglePrefab, Vector3.zero, Quaternion.identity);
-            instantiatedJuggle.SetPlayer(this);
+            instantiatedJuggle.SetPlayer(playerID);
             playerJuggles.Add(instantiatedJuggle);
         }
     }
@@ -85,7 +86,13 @@ public class PlayerController : MonoBehaviour
                     Debug.Log(catchedInput.ToString());
                     break;
                 case INPUTACTIONS.CATCH:
-                    Debug.Log(catchedInput.ToString());
+                    if (__targetPickupArea == null) break;
+
+                    bool pickedUpJuggle = __targetPickupArea.TryPickup(playerID);
+                    if(pickedUpJuggle) {
+                        juggleAmmo++;
+                        // Otorgar puntos imaginarios aquí
+                    }
                     break;
                 case INPUTACTIONS.THROW:
                     Juggle? juggleToThrow = GetAvailableJuggle();
@@ -198,4 +205,29 @@ public class PlayerController : MonoBehaviour
 
 		this.transform.position = MapBorders.Instance.ClampVectorToArea(finalPosition);
 	}
+
+    private void OnTriggerStay(Collider other)
+    {
+        bool isPickupArea = other.TryGetComponent(out JugglePickupArea pickup);
+        bool isJuggle = other.TryGetComponent(out JuggleProjectile juggleProjectile);
+
+        if (isPickupArea) // I know
+        {
+            __targetPickupArea = pickup;
+        }
+        else if (isJuggle)
+        {
+            juggleProjectile.TryPickUpFromFloor(playerID);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        bool isPickupArea = other.TryGetComponent(out JugglePickupArea pickup);
+
+        if (isPickupArea && pickup == __targetPickupArea) // Poetry
+        {
+            __targetPickupArea = null;
+        }
+    }
 }
