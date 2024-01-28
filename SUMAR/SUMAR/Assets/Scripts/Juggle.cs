@@ -17,7 +17,7 @@ public class Juggle : MonoBehaviour
 
     private float __travelTime = 0f, __maxTravelHeight = 0f;
     private PlayerController __playerController;
-    private int __playerID;
+    public int __playerID;
     private Vector3 __targetPosition;
     private float elapsedTime;
     private SpriteRenderer spriteRenderer;
@@ -36,7 +36,7 @@ public class Juggle : MonoBehaviour
     public void SetPlayer(PlayerController playerController)
     {
         __playerController = playerController;
-        __playerID = __playerController.playerID;
+        __playerID = playerController.playerID;
     }
 
     public void Shoot(Vector3 startingPosition, Vector3 direction)
@@ -46,7 +46,7 @@ public class Juggle : MonoBehaviour
         sprite.enabled = true;
         state = JUGGLESTATE.THROWN;
 
-        StartCoroutine(ShootCoroutine());
+        shootCoroutine = StartCoroutine(ShootCoroutine());
     }
 
     IEnumerator ShootCoroutine()
@@ -68,6 +68,7 @@ public class Juggle : MonoBehaviour
         sprite.enabled = false;
         state=JUGGLESTATE.AVAILABLE;
         StopCoroutine(shootCoroutine);
+        shootCoroutine = null;
 
         Vector3 newJugglePosition = __playerController.GetJugglePosition();
         setTargetPosition(newJugglePosition, transform.position);
@@ -131,6 +132,7 @@ public class Juggle : MonoBehaviour
         sprite.enabled = false;
 
         StopCoroutine(travelCoroutine);
+        travelCoroutine = null;
     }
 
     public void TryPickupFromFloor(int playerID)
