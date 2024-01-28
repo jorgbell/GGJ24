@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Xml;
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -26,6 +27,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Animations")]
     [SerializeField] Animator animator;
+    [SerializeField] AnimatorController[] playerControllers;
 
     [Header("Juggle")]
     [SerializeField] int maxJuggleAmmo = 5;
@@ -40,8 +42,9 @@ public class PlayerController : MonoBehaviour
     private Queue<INPUTACTIONS> inputQueue = new Queue<INPUTACTIONS>();
 
     [SerializeField]
-    private int playerID = 1;
+    public int playerID = 1;
     private int? uniqueID = null;
+    private bool __lookingRight = true;
 
     bool m_isInDash = false;
     float m_initialDashTime;
@@ -65,12 +68,14 @@ public class PlayerController : MonoBehaviour
         playerInput.PlayerActionMap.Pause.performed += ctx => EnqueueActionInput(ctx, INPUTACTIONS.PAUSE);
 
         spriteRenderer = GetComponent<SpriteRenderer>();
+        __lookingRight = true;
 
         pointsManager = GameObject.FindWithTag("PointsManager").GetComponent<PointsManager>();
 
         playerID = GameManager.Instance.getPlayerId();
+        animator.runtimeAnimatorController = playerControllers[playerID];
 
-        Vector3 spawnPoint = MapBorders.Instance.GetSpawnPoint(playerID).position;
+		Vector3 spawnPoint = MapBorders.Instance.GetSpawnPoint(playerID).position;
 		transform.position = new Vector3(spawnPoint.x, transform.position.y, spawnPoint.z);
     }
 
@@ -81,7 +86,7 @@ public class PlayerController : MonoBehaviour
         for (int i = 0; i < maxJuggleAmmo; i++)
         {
             Juggle instantiatedJuggle = Instantiate(jugglePrefab, Vector3.zero, Quaternion.identity);
-            instantiatedJuggle.SetPlayer(playerID);
+            instantiatedJuggle.SetPlayer(this);
             instantiatedJuggle.setPointsManager(pointsManager);
             playerJuggles.Add(instantiatedJuggle);
         }
@@ -98,16 +103,33 @@ public class PlayerController : MonoBehaviour
 
 
     private void Update()
-    {
+    {       
+
         INPUTACTIONS catchedInput;
         while (inputQueue.TryDequeue(out catchedInput))
         {
             //Debug.Log(catchedInput.ToString());
             switch (catchedInput)
             {
-                case INPUTACTIONS.ATTACK:                    
-					animator.SetTrigger("attack");
+                case INPUTACTIONS.ATTACK:
+
+                    Debug.Log(catchedInput.ToString());
+
+                    Juggle? juggleForAttack = GetAvailableJuggle();
+
+                    if(juggleForAttack == null) break;
+
+                    animator.SetTrigger("attack");
 					AudioManager.instance.Play("goofyass3");
+                    Vector3 shootingDirection = new Vector3(Vector3.Normalize(axisvalue).x, 0, Vector3.Normalize(axisvalue).y);
+                    if (shootingDirection == Vector3.zero) 
+                    {
+                        if (__lookingRight == true) shootingDirection = new Vector3(1, 0, 0);
+                        else shootingDirection = new Vector3(-1, 0, 0);
+                    }
+                    
+                    juggleForAttack.Shoot(transform.position, shootingDirection);
+
 					break;
                 case INPUTACTIONS.CATCH:
                     if (__targetPickupArea == null) break;
@@ -139,15 +161,25 @@ public class PlayerController : MonoBehaviour
                     OnTaunt();
                     break;
                 case INPUTACTIONS.PAUSE:
-					animator.SetTrigger("hit"); //TODO: provisional para hacer test
-					AudioManager.instance.Play("goofyass4");
+                    Debug.Log(catchedInput.ToString());
+					//animator.SetTrigger("hit"); //TODO: provisional para hacer test
+					//AudioManager.instance.Play("goofyass4");
+
+                    MenuPausa.Instance.ToggleMenu();
 					break;
                 default:
                     break;
             }
         }
 
-        if (m_isInTaunt)
+		if (Time.timeScale == 0.0f)
+		{
+			return;
+		}
+
+
+
+		if (m_isInTaunt)
         {
             HandleTaunt();
 
@@ -161,7 +193,7 @@ public class PlayerController : MonoBehaviour
         }
 	}
 
-    private Vector3 GetJugglePosition() //This little maneuver is going to cost us 100000 years.
+    public Vector3 GetJugglePosition() //This little maneuver is going to cost us 100000 years.
     {
         Vector3 positionCandidate = juggleArea.SelectPoint() + this.transform.position;
         
@@ -204,14 +236,14 @@ public class PlayerController : MonoBehaviour
 
     public void OnDash()
     {
-        if (!m_isInDash && Time.time > m_endDashTime + dashCooldownTime && !m_isInTaunt)
+        if (isRunning && !m_isInDash && Time.time > m_endDashTime + dashCooldownTime && !m_isInTaunt)
         {
-            GameManager.Instance.cameraEffects.shakeDuration = 2;
             m_isInDash = true;
 			animator.SetBool("isInDash", true);
 			m_initialDashTime = Time.time;
             m_dashDirection = axisvalue;
 			AudioManager.instance.Play("dash");
+            GameManager.Instance.cameraEffects.shakeDuration = 2;
 		}
 	}
     public void OnTaunt()
@@ -225,18 +257,24 @@ public class PlayerController : MonoBehaviour
 		}
     }
 
+    bool isRunning = false;
     private void HandleMovement()
 	{
         if(axisvalue == Vector3.zero)
         {
-            animator.SetBool("isRunning", false);
+            isRunning = false;
+			animator.SetBool("isRunning", isRunning);
 			return;
 		}
-		animator.SetBool("isRunning", true);
+
+        isRunning = true;
+		animator.SetBool("isRunning", isRunning);
 
 		Vector3 finalPosition = this.transform.position + (new Vector3(axisvalue.x, 0, axisvalue.y)).normalized * movementSpeed * Time.deltaTime;
 
 		this.transform.position =  MapBorders.Instance.ClampVectorToArea(finalPosition);
+
+        __lookingRight = (axisvalue.x > 0);
 
         if((axisvalue.x > 0 && transform.localScale.x > 0) || (axisvalue.x < 0 && transform.localScale.x < 0))
         {
@@ -261,6 +299,16 @@ public class PlayerController : MonoBehaviour
 
 		this.transform.position = MapBorders.Instance.ClampVectorToArea(finalPosition);
 	}
+
+    private void OnTriggerEnter(Collider other)
+    {
+        bool isJuggle = other.TryGetComponent(out JuggleProjectile juggleProjectile);
+
+        if (isJuggle)
+        {
+            bool hasBeenShootWithJuggle = juggleProjectile.TryReceiveShot(playerID);
+        }
+    }
 
     private void OnTriggerStay(Collider other)
     {

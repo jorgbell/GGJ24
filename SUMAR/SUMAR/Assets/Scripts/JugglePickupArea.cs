@@ -26,10 +26,12 @@ public class JugglePickupArea : MonoBehaviour
     {
         this.transform.position = position;
         sprite.enabled = true;
+        sprite.color = Color.white;
     }
 
     public void SetPickable(){
         state = JUGGLEPICKUPAREASTATE.PICKABLE;
+        sprite.color = Color.red;
     }
 
     public void OnJuggleDropped(){
