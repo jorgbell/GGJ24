@@ -18,6 +18,7 @@ public class Juggle : MonoBehaviour
     private PlayerController PlayerController;
     private int __playerID;
     private Vector3 __targetPosition;
+    private float elapsedTime;
     private SpriteRenderer spriteRenderer;
     private Coroutine travelCoroutine;
     public JUGGLESTATE state = JUGGLESTATE.AVAILABLE;
@@ -49,7 +50,8 @@ public class Juggle : MonoBehaviour
 
     IEnumerator TravelToTarget()
     {
-        float elapsedTime = 0.0f, peakTime = __travelTime * 0.5f;
+        elapsedTime = 0.0f;
+        float peakTime = __travelTime * 0.5f;
         Vector3 startingPosition = transform.position;
         sprite.enabled = true;
         state = JUGGLESTATE.ON_AIR;
@@ -92,5 +94,11 @@ public class Juggle : MonoBehaviour
 
         state = JUGGLESTATE.AVAILABLE;
         sprite.enabled = false;
+    }
+
+	private void OnDrawGizmos()
+	{
+        Gizmos.color = Color.green;
+        Gizmos.DrawSphere(__targetPosition, 0.2f);
     }
 }

@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour
     private List<Juggle> playerJuggles = new List<Juggle>();
     [SerializeField] JuggleArea juggleArea;
     [SerializeField] Juggle jugglePrefab;
+    [SerializeField] PointsManager pointsManager;
     private JugglePickupArea __targetPickupArea = null; //JANKY AF ESPERO QUE NO DE PROBLEMAS
 
     private Vector3 axisvalue = new Vector3();
@@ -64,11 +65,17 @@ public class PlayerController : MonoBehaviour
         playerInput.PlayerActionMap.Pause.performed += ctx => EnqueueActionInput(ctx, INPUTACTIONS.PAUSE);
 
         spriteRenderer = GetComponent<SpriteRenderer>();
+
+        pointsManager = GameObject.FindWithTag("PointsManager").GetComponent<PointsManager>();
+
+        playerID = GameManager.Instance.getPlayerId();
+
+        Vector3 spawnPoint = MapBorders.Instance.GetSpawnPoint(playerID).position;
+		transform.position = new Vector3(spawnPoint.x, transform.position.y, spawnPoint.z);
     }
 
     private void Start()
     {
-        transform.position = MapBorders.Instance.GetRandomPositionInArea(transform.position.y);
         juggleAmmo = maxJuggleAmmo;
 
         for (int i = 0; i < maxJuggleAmmo; i++)
@@ -98,8 +105,10 @@ public class PlayerController : MonoBehaviour
             switch (catchedInput)
             {
                 case INPUTACTIONS.ATTACK:
+
                     Debug.Log(catchedInput.ToString());
 					animator.SetTrigger("attack");
+					AudioManager.instance.Play("goofyass3");
 					break;
                 case INPUTACTIONS.CATCH:
                     if (__targetPickupArea == null) break;
@@ -107,17 +116,20 @@ public class PlayerController : MonoBehaviour
                     bool pickedUpJuggle = __targetPickupArea.TryPickup(playerID);
                     if(pickedUpJuggle) {
                         juggleAmmo++;
-                        // Otorgar puntos imaginarios aquí
+                        pointsManager.catchBall(playerID);
                     }
                     break;
                 case INPUTACTIONS.THROW:
+
                     Juggle? juggleToThrow = GetAvailableJuggle();
 
                     if(juggleToThrow == null) break;
 
                     Vector3 juggleTargetPosition = GetJugglePosition();
                     juggleToThrow.setTargetPosition(juggleTargetPosition, this.transform.position, false);
+                    pointsManager.throwBall(playerID);
 					animator.SetTrigger("hurl");
+					AudioManager.instance.Play("hurl");
 
 					break;
                 case INPUTACTIONS.DASH:
@@ -131,6 +143,7 @@ public class PlayerController : MonoBehaviour
                 case INPUTACTIONS.PAUSE:
                     Debug.Log(catchedInput.ToString());
 					animator.SetTrigger("hit"); //TODO: provisional para hacer test
+					AudioManager.instance.Play("goofyass4");
 					break;
                 default:
                     break;
@@ -196,11 +209,13 @@ public class PlayerController : MonoBehaviour
     {
         if (!m_isInDash && Time.time > m_endDashTime + dashCooldownTime && !m_isInTaunt)
         {
+            GameManager.Instance.cameraEffects.shakeDuration = 2;
             m_isInDash = true;
 			animator.SetBool("isInDash", true);
 			m_initialDashTime = Time.time;
             m_dashDirection = axisvalue;
-        }
+			AudioManager.instance.Play("dash");
+		}
 	}
     public void OnTaunt()
     {
@@ -209,7 +224,8 @@ public class PlayerController : MonoBehaviour
             m_isInTaunt = true;
 			animator.SetBool("isInTaunt", true);
 			m_initialTauntTime = Time.time;
-        }
+			AudioManager.instance.Play("goofyass2");
+		}
     }
 
     private void HandleMovement()

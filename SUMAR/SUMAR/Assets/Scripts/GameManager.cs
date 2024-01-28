@@ -13,32 +13,42 @@ public class GameManager : MonoBehaviour
     {
         get { return instance; }
     }
+
+
+
+	private int playerId = 0;
+
+
+	public CameraEffects cameraEffects;
+    
+    
     private void Awake()
     {
-        if (instance != null)
+        if (instance == null)
         {
-            Destroy(gameObject);
-            return;
+            Debug.Log("GameManager instanced");
+            instance = this;
+            DontDestroyOnLoad(gameObject);
         }
-        instance = this;
-        DontDestroyOnLoad(gameObject);
-
-
+        else if (instance != this)
+        {
+            instance.cameraEffects = cameraEffects;
+            Destroy(gameObject);
+        }
     }
 
-    private void Start()
-    {
-        //if (Random.Range(0, 2) == 0)
-        //    AudioManager.instance.Play("ost1");
-        //else
-        //    AudioManager.instance.Play("ost1");
-    }
-    public void LoadScene(string sceneName)
+	private void Start()
+	{
+        AudioManager.instance.Play("menu");
+	}
+
+	public void LoadScene(string sceneName)
     {
 
         if (SceneExists(sceneName))
-        {
-            StartCoroutine(LoadSceneAsync(sceneName));
+		{
+            AudioManager.instance.StopAll();
+			StartCoroutine(LoadSceneAsync(sceneName));
         }
         else
         {
@@ -72,7 +82,20 @@ public class GameManager : MonoBehaviour
 
             yield return null;
         }
+
+        yield return new WaitForSeconds(0.2f);
+        if (Random.Range(0, 2) == 0)
+        {
+            AudioManager.instance.Play("ost1");
+        }
+        else
+        {
+            AudioManager.instance.Play("ost2");
+        }
     }
 
+    public int getPlayerId() {
 
+        return playerId++;
+    }
 }

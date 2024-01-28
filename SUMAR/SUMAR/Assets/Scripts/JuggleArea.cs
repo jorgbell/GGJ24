@@ -24,7 +24,7 @@ public class JuggleArea : MonoBehaviour
     public Vector3 SelectPoint()
     {
         float angle = Random.Range(0f, 2f * Mathf.PI); // Random angle in radians
-        float distance = Random.Range(minDiameter * 0.5f, maxDiameter * 0.5f);
+        float distance = 0f; //Random.Range(minDiameter * 0.5f, maxDiameter * 0.5f); 
 
         float x = distance * Mathf.Cos(angle);
         float z = distance * Mathf.Sin(angle);

@@ -55,11 +55,12 @@ MonoBehaviour:
   dashSpeed: 20
   dashTime: 0.4
   dashCooldownTime: 1
-  tauntTime: 2
+  tauntTime: 1
   animator: {fileID: 7073712425018367552}
   maxJuggleAmmo: 5
   juggleArea: {fileID: 3173146476064886415}
   jugglePrefab: {fileID: -6344840808749276720, guid: 76527145e20a4224fbb609984dfdc005, type: 3}
+  pointsManager: {fileID: 0}
   playerID: 0
 --- !u!114 &5485132102365030772
 MonoBehaviour:
