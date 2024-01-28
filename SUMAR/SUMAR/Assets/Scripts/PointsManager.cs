@@ -35,15 +35,14 @@ public class PointsManager : MonoBehaviour
 
         if(points[playerIndex] >= maxPoints)
         {
-            Debug.Log("HAS GANADO JUGADOR: " + playerIndex);
-        }
-
+            MenuWin.Instance.WinBro(playerIndex);
+		}
 	}
 
     public void dropBall(int playerIndex)
     {
         Debug.Log("se cayó " + airborneBalls[playerIndex]);
-        airborneBalls[playerIndex]--;
+        //airborneBalls[playerIndex]--;
         airborneBalls[playerIndex] = Mathf.Max(airborneBalls[playerIndex], 0);
         points[playerIndex] -= 1;
         points[playerIndex] = Mathf.Max(points[playerIndex], 0);
