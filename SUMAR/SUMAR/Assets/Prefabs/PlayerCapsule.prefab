@@ -52,9 +52,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 10
-  dashSpeed: 30
-  dashTime: 0.1
+  dashSpeed: 20
+  dashTime: 0.4
   dashCooldownTime: 1
+  tauntTime: 2
+  animator: {fileID: 7073712425018367552}
   maxJuggleAmmo: 5
   juggleArea: {fileID: 3173146476064886415}
   jugglePrefab: {fileID: -6344840808749276720, guid: 76527145e20a4224fbb609984dfdc005, type: 3}
@@ -175,7 +177,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 3.5555556, y: 2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

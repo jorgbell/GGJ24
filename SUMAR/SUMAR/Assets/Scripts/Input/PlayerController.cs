@@ -10,6 +10,8 @@ public enum INPUTACTIONS { ATTACK, CATCH, THROW, DASH, TAUNT, PAUSE };
 
 public class PlayerController : MonoBehaviour
 {
+    public PlayerActions playerInput;
+
     [Header("Movement")]
     [SerializeField] float movementSpeed;
 
@@ -17,6 +19,13 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] float dashSpeed;
 	[SerializeField] float dashTime;
 	[SerializeField] float dashCooldownTime;
+
+    [Header("Taunt")]
+    [SerializeField] float tauntTime;
+    private SpriteRenderer spriteRenderer; //CAMBIARPORANIMACION
+
+    [Header("Animations")]
+    [SerializeField] Animator animator;
 
     [Header("Juggle")]
     [SerializeField] int maxJuggleAmmo = 5;
@@ -26,7 +35,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Juggle jugglePrefab;
     private JugglePickupArea __targetPickupArea = null; //JANKY AF ESPERO QUE NO DE PROBLEMAS
 
-    public PlayerActions playerInput;
     private Vector3 axisvalue = new Vector3();
     private Queue<INPUTACTIONS> inputQueue = new Queue<INPUTACTIONS>();
 
@@ -37,6 +45,9 @@ public class PlayerController : MonoBehaviour
     float m_initialDashTime;
     float m_endDashTime;
     Vector2 m_dashDirection;
+
+    bool m_isInTaunt = false;
+    float m_initialTauntTime;
 
     private void Awake()
     {
@@ -50,7 +61,10 @@ public class PlayerController : MonoBehaviour
         playerInput.PlayerActionMap.Dash.performed += ctx => EnqueueActionInput(ctx, INPUTACTIONS.DASH);
         playerInput.PlayerActionMap.Taunt.performed += ctx => EnqueueActionInput(ctx, INPUTACTIONS.TAUNT);
         playerInput.PlayerActionMap.Pause.performed += ctx => EnqueueActionInput(ctx, INPUTACTIONS.PAUSE);
+
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
+
     private void Start()
     {
         transform.position = MapBorders.Instance.GetRandomPositionInArea(transform.position.y);
@@ -107,6 +121,7 @@ public class PlayerController : MonoBehaviour
                     OnDash();
 					break;
                 case INPUTACTIONS.TAUNT:
+                    OnTaunt();
                     Debug.Log(catchedInput.ToString());
                     break;
                 case INPUTACTIONS.PAUSE:
@@ -117,7 +132,11 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (m_isInDash)
+        if (m_isInTaunt)
+        {
+            HandleTaunt();
+
+        }else if(m_isInDash)
         {
             HandleDash();
         }
@@ -165,22 +184,34 @@ public class PlayerController : MonoBehaviour
 
     public void OnDash()
     {
-        if (!m_isInDash && Time.time > m_endDashTime + dashCooldownTime)
+        if (!m_isInDash && Time.time > m_endDashTime + dashCooldownTime && !m_isInTaunt)
         {
             m_isInDash = true;
-            m_initialDashTime = Time.time;
+			animator.SetBool("isInDash", true);
+			m_initialDashTime = Time.time;
             m_dashDirection = axisvalue;
         }
 	}
+    public void OnTaunt()
+    {
+        if (!m_isInDash)
+        {
+            m_isInTaunt = true;
+            m_initialTauntTime = Time.time;
+            spriteRenderer.color = Color.blue;
+        }
+    }
 
     private void HandleMovement()
 	{
         if(axisvalue == Vector3.zero)
         {
-            return;
-        }
+            animator.SetBool("isRunning", false);
+			return;
+		}
+		animator.SetBool("isRunning", true);
 
-        Vector3 finalPosition = this.transform.position + (new Vector3(axisvalue.x, 0, axisvalue.y)).normalized * movementSpeed * Time.deltaTime;
+		Vector3 finalPosition = this.transform.position + (new Vector3(axisvalue.x, 0, axisvalue.y)).normalized * movementSpeed * Time.deltaTime;
 
 		this.transform.position =  MapBorders.Instance.ClampVectorToArea(finalPosition);
 
@@ -198,10 +229,12 @@ public class PlayerController : MonoBehaviour
         {
             m_isInDash = false;
 			m_endDashTime = Time.time;
-			return;
-        }
 
-        Vector3 finalPosition = this.transform.position + (new Vector3(m_dashDirection.x, 0, m_dashDirection.y)).normalized * dashSpeed * Time.deltaTime;
+			animator.SetBool("isInDash", false);
+			return;
+		}
+
+		Vector3 finalPosition = this.transform.position + (new Vector3(m_dashDirection.x, 0, m_dashDirection.y)).normalized * dashSpeed * Time.deltaTime;
 
 		this.transform.position = MapBorders.Instance.ClampVectorToArea(finalPosition);
 	}
@@ -228,6 +261,16 @@ public class PlayerController : MonoBehaviour
         if (isPickupArea && pickup == __targetPickupArea) // Poetry
         {
             __targetPickupArea = null;
+        }
+    }
+}
+    private void HandleTaunt()
+    {
+        if (m_initialTauntTime + tauntTime < Time.time)
+        {
+            m_isInTaunt = false;
+            spriteRenderer.color = Color.white;
+            return;
         }
     }
 }
