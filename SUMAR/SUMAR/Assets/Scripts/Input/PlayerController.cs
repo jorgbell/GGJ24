@@ -207,14 +207,14 @@ public class PlayerController : MonoBehaviour
 
     public void OnDash()
     {
-        if (!m_isInDash && Time.time > m_endDashTime + dashCooldownTime && !m_isInTaunt)
+        if (isRunning && !m_isInDash && Time.time > m_endDashTime + dashCooldownTime && !m_isInTaunt)
         {
-            GameManager.Instance.cameraEffects.shakeDuration = 2;
             m_isInDash = true;
 			animator.SetBool("isInDash", true);
 			m_initialDashTime = Time.time;
             m_dashDirection = axisvalue;
 			AudioManager.instance.Play("dash");
+            GameManager.Instance.cameraEffects.shakeDuration = 2;
 		}
 	}
     public void OnTaunt()
@@ -228,14 +228,18 @@ public class PlayerController : MonoBehaviour
 		}
     }
 
+    bool isRunning = false;
     private void HandleMovement()
 	{
         if(axisvalue == Vector3.zero)
         {
-            animator.SetBool("isRunning", false);
+            isRunning = false;
+			animator.SetBool("isRunning", isRunning);
 			return;
 		}
-		animator.SetBool("isRunning", true);
+
+        isRunning = true;
+		animator.SetBool("isRunning", isRunning);
 
 		Vector3 finalPosition = this.transform.position + (new Vector3(axisvalue.x, 0, axisvalue.y)).normalized * movementSpeed * Time.deltaTime;
 
