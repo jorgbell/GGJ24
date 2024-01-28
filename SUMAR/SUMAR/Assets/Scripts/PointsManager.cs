@@ -20,20 +20,25 @@ public class PointsManager : MonoBehaviour
 
 	public void throwBall(int playerIndex)
     {
+        Debug.Log("Bola lanzada! "+ airborneBalls[playerIndex]);
         airborneBalls[playerIndex]++;
     }
 
     public void catchBall(int playerIndex)
     {
+        Debug.Log("Pilla del aire " + airborneBalls[playerIndex]);
         points[playerIndex] += airborneBalls[playerIndex];
+
         airborneBalls[playerIndex]--;
         updateUI();
     }
 
     public void dropBall(int playerIndex)
     {
+        Debug.Log("se cayó " + airborneBalls[playerIndex]);
         airborneBalls[playerIndex]--;
-        points[playerIndex] -= 2;
+        points[playerIndex] -= 1;
+        points[playerIndex] = Mathf.Max(points[playerIndex], 0);
         updateUI();
     }
 

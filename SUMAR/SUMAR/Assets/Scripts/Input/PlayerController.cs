@@ -81,6 +81,7 @@ public class PlayerController : MonoBehaviour
         {
             Juggle instantiatedJuggle = Instantiate(jugglePrefab, Vector3.zero, Quaternion.identity);
             instantiatedJuggle.SetPlayer(playerID);
+            instantiatedJuggle.setPointsManager(pointsManager);
             playerJuggles.Add(instantiatedJuggle);
         }
     }
@@ -100,12 +101,10 @@ public class PlayerController : MonoBehaviour
         INPUTACTIONS catchedInput;
         while (inputQueue.TryDequeue(out catchedInput))
         {
-            Debug.Log("reading input queue...");
+            //Debug.Log(catchedInput.ToString());
             switch (catchedInput)
             {
-                case INPUTACTIONS.ATTACK:
-
-                    Debug.Log(catchedInput.ToString());
+                case INPUTACTIONS.ATTACK:                    
 					animator.SetTrigger("attack");
 					break;
                 case INPUTACTIONS.CATCH:
@@ -125,20 +124,18 @@ public class PlayerController : MonoBehaviour
 
                     Vector3 juggleTargetPosition = GetJugglePosition();
                     juggleToThrow.setTargetPosition(juggleTargetPosition, this.transform.position, false);
+
                     pointsManager.throwBall(playerID);
 					animator.SetTrigger("hurl");
 
                     break;
                 case INPUTACTIONS.DASH:
-                    Debug.Log(catchedInput.ToString());
                     OnDash();
 					break;
                 case INPUTACTIONS.TAUNT:
                     OnTaunt();
-                    Debug.Log(catchedInput.ToString());
                     break;
                 case INPUTACTIONS.PAUSE:
-                    Debug.Log(catchedInput.ToString());
 					animator.SetTrigger("hit"); //TODO: provisional para hacer test
 					break;
                 default:

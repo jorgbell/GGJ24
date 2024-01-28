@@ -23,6 +23,8 @@ public class Juggle : MonoBehaviour
     private Coroutine travelCoroutine;
     public JUGGLESTATE state = JUGGLESTATE.AVAILABLE;
 
+    private PointsManager pointsManager;
+
     void Start()
     {
         sprite.enabled = false;
@@ -46,6 +48,10 @@ public class Juggle : MonoBehaviour
         jugglePickupArea.SetActiveInPosition(__targetPosition);
 
         travelCoroutine = StartCoroutine(TravelToTarget());
+    }
+
+    public void setPointsManager(PointsManager pm) {
+        pointsManager = pm;
     }
 
     IEnumerator TravelToTarget()
@@ -75,6 +81,7 @@ public class Juggle : MonoBehaviour
         }
         
         state = JUGGLESTATE.ON_FLOOR;
+        pointsManager.dropBall(__playerID);
         jugglePickupArea.OnJuggleDropped();
         juggleBall.transform.position = __targetPosition;
     }
@@ -94,11 +101,5 @@ public class Juggle : MonoBehaviour
 
         state = JUGGLESTATE.AVAILABLE;
         sprite.enabled = false;
-    }
-
-	private void OnDrawGizmos()
-	{
-        Gizmos.color = Color.green;
-        Gizmos.DrawSphere(__targetPosition, 0.2f);
     }
 }
