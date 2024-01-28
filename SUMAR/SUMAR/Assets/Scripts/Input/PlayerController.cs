@@ -99,7 +99,8 @@ public class PlayerController : MonoBehaviour
             {
                 case INPUTACTIONS.ATTACK:
                     Debug.Log(catchedInput.ToString());
-                    break;
+					animator.SetTrigger("attack");
+					break;
                 case INPUTACTIONS.CATCH:
                     if (__targetPickupArea == null) break;
 
