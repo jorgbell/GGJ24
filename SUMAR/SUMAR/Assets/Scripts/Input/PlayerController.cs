@@ -190,8 +190,8 @@ public class PlayerController : MonoBehaviour
         if (!m_isInDash)
         {
             m_isInTaunt = true;
-            m_initialTauntTime = Time.time;
-            spriteRenderer.color = Color.blue;
+			animator.SetBool("isInTaunt", true);
+			m_initialTauntTime = Time.time;
         }
     }
 
@@ -237,8 +237,8 @@ public class PlayerController : MonoBehaviour
         if (m_initialTauntTime + tauntTime < Time.time)
         {
             m_isInTaunt = false;
-            spriteRenderer.color = Color.white;
-            return;
+			animator.SetBool("isInTaunt", false);
+			return;
         }
     }
 }
