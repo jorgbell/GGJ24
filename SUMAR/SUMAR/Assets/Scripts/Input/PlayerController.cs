@@ -263,7 +263,7 @@ public class PlayerController : MonoBehaviour
             __targetPickupArea = null;
         }
     }
-}
+
     private void HandleTaunt()
     {
         if (m_initialTauntTime + tauntTime < Time.time)
