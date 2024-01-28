@@ -42,6 +42,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private int playerID = 1;
     private int? uniqueID = null;
+    private bool __lookingRight = true;
 
     bool m_isInDash = false;
     float m_initialDashTime;
@@ -65,6 +66,7 @@ public class PlayerController : MonoBehaviour
         playerInput.PlayerActionMap.Pause.performed += ctx => EnqueueActionInput(ctx, INPUTACTIONS.PAUSE);
 
         spriteRenderer = GetComponent<SpriteRenderer>();
+        __lookingRight = true;
 
         pointsManager = GameObject.FindWithTag("PointsManager").GetComponent<PointsManager>();
 
@@ -82,6 +84,7 @@ public class PlayerController : MonoBehaviour
         {
             Juggle instantiatedJuggle = Instantiate(jugglePrefab, Vector3.zero, Quaternion.identity);
             instantiatedJuggle.SetPlayer(playerID);
+            instantiatedJuggle.setPointsManager(pointsManager);
             playerJuggles.Add(instantiatedJuggle);
         }
     }
@@ -102,14 +105,28 @@ public class PlayerController : MonoBehaviour
         INPUTACTIONS catchedInput;
         while (inputQueue.TryDequeue(out catchedInput))
         {
-            Debug.Log("reading input queue...");
+            //Debug.Log(catchedInput.ToString());
             switch (catchedInput)
             {
                 case INPUTACTIONS.ATTACK:
 
                     Debug.Log(catchedInput.ToString());
-					animator.SetTrigger("attack");
+
+                    Juggle? juggleForAttack = GetAvailableJuggle();
+
+                    if(juggleForAttack == null) break;
+
+                    animator.SetTrigger("attack");
 					AudioManager.instance.Play("goofyass3");
+                    Vector3 shootingDirection = new Vector3(Vector3.Normalize(axisvalue).x, 0, Vector3.Normalize(axisvalue).y);
+                    if (shootingDirection == Vector3.zero) 
+                    {
+                        if (__lookingRight == true) shootingDirection = new Vector3(1, 0, 0);
+                        else shootingDirection = new Vector3(-1, 0, 0);
+                    }
+                    
+                    juggleForAttack.Shoot(transform.position, shootingDirection);
+
 					break;
                 case INPUTACTIONS.CATCH:
                     if (__targetPickupArea == null) break;
@@ -128,18 +145,17 @@ public class PlayerController : MonoBehaviour
 
                     Vector3 juggleTargetPosition = GetJugglePosition();
                     juggleToThrow.setTargetPosition(juggleTargetPosition, this.transform.position, false);
+
                     pointsManager.throwBall(playerID);
 					animator.SetTrigger("hurl");
 					AudioManager.instance.Play("hurl");
 
 					break;
                 case INPUTACTIONS.DASH:
-                    Debug.Log(catchedInput.ToString());
                     OnDash();
 					break;
                 case INPUTACTIONS.TAUNT:
                     OnTaunt();
-                    Debug.Log(catchedInput.ToString());
                     break;
                 case INPUTACTIONS.PAUSE:
                     Debug.Log(catchedInput.ToString());
@@ -255,6 +271,8 @@ public class PlayerController : MonoBehaviour
 
 		this.transform.position =  MapBorders.Instance.ClampVectorToArea(finalPosition);
 
+        __lookingRight = (axisvalue.x > 0);
+
         if((axisvalue.x > 0 && transform.localScale.x > 0) || (axisvalue.x < 0 && transform.localScale.x < 0))
         {
             Vector3 scale = transform.localScale;
@@ -278,6 +296,16 @@ public class PlayerController : MonoBehaviour
 
 		this.transform.position = MapBorders.Instance.ClampVectorToArea(finalPosition);
 	}
+
+    private void OnTriggerEnter(Collider other)
+    {
+        bool isJuggle = other.TryGetComponent(out JuggleProjectile juggleProjectile);
+
+        if (isJuggle)
+        {
+            bool hasBeenShootWithJuggle = juggleProjectile.TryReceiveShot(playerID);
+        }
+    }
 
     private void OnTriggerStay(Collider other)
     {

@@ -10,4 +10,9 @@ public class JuggleProjectile : MonoBehaviour
     {
         juggle.TryPickupFromFloor(playerID);
     }
+
+    public bool TryReceiveShot(int playerID)
+    {
+        return juggle.TryReceiveShot(playerID);
+    }
 }
