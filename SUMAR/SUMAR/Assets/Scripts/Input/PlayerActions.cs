@@ -226,6 +226,17 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""612a56d5-ee13-4a26-8186-50e414d791c6"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Throw Ball"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""bd136af8-62d0-4ed4-a872-d3741c5db25b"",
                     ""path"": ""<Gamepad>/start"",
                     ""interactions"": """",
