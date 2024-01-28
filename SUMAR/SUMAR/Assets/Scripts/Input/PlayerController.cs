@@ -106,7 +106,8 @@ public class PlayerController : MonoBehaviour
                 case INPUTACTIONS.ATTACK:
 
                     Debug.Log(catchedInput.ToString());
-                    break;
+					animator.SetTrigger("attack");
+					break;
                 case INPUTACTIONS.CATCH:
                     if (__targetPickupArea == null) break;
 
@@ -125,6 +126,7 @@ public class PlayerController : MonoBehaviour
                     Vector3 juggleTargetPosition = GetJugglePosition();
                     juggleToThrow.setTargetPosition(juggleTargetPosition, this.transform.position, false);
                     pointsManager.throwBall(playerID);
+					animator.SetTrigger("hurl");
 
                     break;
                 case INPUTACTIONS.DASH:
@@ -137,7 +139,8 @@ public class PlayerController : MonoBehaviour
                     break;
                 case INPUTACTIONS.PAUSE:
                     Debug.Log(catchedInput.ToString());
-                    break;
+					animator.SetTrigger("hit"); //TODO: provisional para hacer test
+					break;
                 default:
                     break;
             }
