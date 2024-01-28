@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class PointsManager : MonoBehaviour
 {
     [SerializeField] private Image pointsImage;
-    [SerializeField] private Text pointsText;
+    [SerializeField] private Image pointsRightBorder;
 
     private int points = 0;
     private int airborneBalls = 0;
@@ -15,8 +15,9 @@ public class PointsManager : MonoBehaviour
 
 	private void Start()
 	{
-        pointsImage.transform.localScale = new Vector3(points / maxPoints, 1,1);
-	}
+        pointsImage.transform.localScale = new Vector3((float)points / maxPoints, 1,1);
+        pointsRightBorder.rectTransform.pivot = new Vector2(1f - (float)points / maxPoints, 0.5f);
+    }
 
 	public void throwBall(int playerIndex)
     {
@@ -27,8 +28,8 @@ public class PointsManager : MonoBehaviour
     {
         points += airborneBalls;
         airborneBalls--;
-        pointsImage.rectTransform.localScale = new Vector3((float)points / maxPoints, 1, 1);
-        pointsText.text = "Puntos: "+points;
+        pointsImage.rectTransform.localScale = new Vector3((float)points / maxPoints - 0.005f, 1, 1);
+        pointsRightBorder.rectTransform.pivot = new Vector2(1f - (float)points / maxPoints, 0.5f);
     }
 
     public void dropBall(int playerIndex)

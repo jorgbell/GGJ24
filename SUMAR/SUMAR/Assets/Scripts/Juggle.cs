@@ -10,8 +10,6 @@ public class Juggle : MonoBehaviour
     [SerializeField] float minTravelTime = 4f, maxTravelTime = 4f;
     [SerializeField] float minHeight = 20f, maxHeight = 20f;
 
-    [SerializeField] PointsManager pointsManager;
-
     private float __travelTime = 0f, __maxTravelHeight = 0f;
     public PlayerController PlayerController;
     private Vector3 __targetPosition;
@@ -33,11 +31,6 @@ public class Juggle : MonoBehaviour
         __targetPosition = new Vector3(targetPosition.x, 0, targetPosition.z);
 
         StartCoroutine(TravelToTarget());
-    }
-
-    public void setPointsmanager(PointsManager pm)
-    {
-        pointsManager = pm;
     }
 
     IEnumerator TravelToTarget()
@@ -66,7 +59,6 @@ public class Juggle : MonoBehaviour
         
         state = JUGGLESTATE.ON_FLOOR;
         transform.position = __targetPosition;
-        pointsManager.dropBall(0);
     }
 
 	private void OnDrawGizmos()

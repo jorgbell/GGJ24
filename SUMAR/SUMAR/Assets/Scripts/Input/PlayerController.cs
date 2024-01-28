@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour
     private List<Juggle> playerJuggles = new List<Juggle>();
     [SerializeField] JuggleArea juggleArea;
     [SerializeField] Juggle jugglePrefab;
+    [SerializeField] PointsManager pointsManager;
 
     private Vector3 axisvalue = new Vector3();
     private Queue<INPUTACTIONS> inputQueue = new Queue<INPUTACTIONS>();
@@ -62,6 +63,8 @@ public class PlayerController : MonoBehaviour
         playerInput.PlayerActionMap.Pause.performed += ctx => EnqueueActionInput(ctx, INPUTACTIONS.PAUSE);
 
         spriteRenderer = GetComponent<SpriteRenderer>();
+
+        pointsManager = GameObject.FindWithTag("PointsManager").GetComponent<PointsManager>();
     }
 
     private void Start()
@@ -96,12 +99,21 @@ public class PlayerController : MonoBehaviour
             switch (catchedInput)
             {
                 case INPUTACTIONS.ATTACK:
+
+                    pointsManager.dropBall(playerID);
+
                     Debug.Log(catchedInput.ToString());
                     break;
                 case INPUTACTIONS.CATCH:
+
+                    pointsManager.catchBall(playerID);
+
                     Debug.Log(catchedInput.ToString());
                     break;
                 case INPUTACTIONS.THROW:
+
+                    pointsManager.throwBall(playerID);
+
                     Juggle? juggleToThrow = GetAvailableJuggle();
 
                     if(juggleToThrow == null) break;
