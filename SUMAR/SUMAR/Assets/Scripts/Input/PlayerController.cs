@@ -42,7 +42,7 @@ public class PlayerController : MonoBehaviour
     private Queue<INPUTACTIONS> inputQueue = new Queue<INPUTACTIONS>();
 
     [SerializeField]
-    private int playerID = 1;
+    public int playerID = 1;
     private int? uniqueID = null;
     private bool __lookingRight = true;
 
@@ -86,7 +86,7 @@ public class PlayerController : MonoBehaviour
         for (int i = 0; i < maxJuggleAmmo; i++)
         {
             Juggle instantiatedJuggle = Instantiate(jugglePrefab, Vector3.zero, Quaternion.identity);
-            instantiatedJuggle.SetPlayer(playerID);
+            instantiatedJuggle.SetPlayer(this);
             instantiatedJuggle.setPointsManager(pointsManager);
             playerJuggles.Add(instantiatedJuggle);
         }
@@ -193,7 +193,7 @@ public class PlayerController : MonoBehaviour
         }
 	}
 
-    private Vector3 GetJugglePosition() //This little maneuver is going to cost us 100000 years.
+    public Vector3 GetJugglePosition() //This little maneuver is going to cost us 100000 years.
     {
         Vector3 positionCandidate = juggleArea.SelectPoint() + this.transform.position;
         
