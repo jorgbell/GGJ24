@@ -151,9 +151,9 @@ public class PlayerController : MonoBehaviour
 
                     pointsManager.throwBall(playerID);
 					animator.SetTrigger("hurl");
-					AudioManager.instance.Play("hurl");
+					if(playerID == 0) AudioManager.instance.Play("p1_throw"); else AudioManager.instance.Play("p2_throw");
 
-					break;
+                    break;
                 case INPUTACTIONS.DASH:
                     OnDash();
 					break;
@@ -242,7 +242,7 @@ public class PlayerController : MonoBehaviour
 			animator.SetBool("isInDash", true);
 			m_initialDashTime = Time.time;
             m_dashDirection = axisvalue;
-			AudioManager.instance.Play("dash");
+            if (playerID == 0) AudioManager.instance.Play("p1_dash"); else AudioManager.instance.Play("p2_dash");
             GameManager.Instance.cameraEffects.shakeDuration = 2;
 		}
 	}
@@ -253,7 +253,7 @@ public class PlayerController : MonoBehaviour
             m_isInTaunt = true;
 			animator.SetBool("isInTaunt", true);
 			m_initialTauntTime = Time.time;
-			AudioManager.instance.Play("goofyass2");
+			AudioManager.instance.Play("taunt");
 		}
     }
 
@@ -282,7 +282,15 @@ public class PlayerController : MonoBehaviour
 			scale.x *= -1;
             transform.localScale = scale;
 		}
-	}
+        if (playerID == 0)
+        {
+                AudioManager.instance.Play("p1_step");
+        }
+        else
+        {
+                AudioManager.instance.Play("p2_step");
+        }
+    }
 
     private void HandleDash()
     {

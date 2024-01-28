@@ -52,7 +52,6 @@ public class AudioManager : MonoBehaviour
         {
             s.source.pitch = UnityEngine.Random.Range(s.minPitch, s.maxPitch);
         }
-        Debug.Log(name);
         s.source.Play();
     }
 
@@ -66,6 +65,18 @@ public class AudioManager : MonoBehaviour
 
         }
         if (s.source.isPlaying) s.source.Stop();
+    }
+
+    public bool IsPlaying(string name)
+    {
+        Sound s = Array.Find(sounds, sound => sound.name == name);
+        if (s == null)
+        {
+            Debug.LogWarning("NO SE ENCUENTRA EL AUDIO: " + name);
+            return false;
+
+        }
+        return s.source.isPlaying;
     }
 
     public void StopAll()
