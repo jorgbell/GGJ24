@@ -37,9 +37,9 @@ public class MapBorders : MonoBehaviour
 		Instance = this;
 	}
 
-	public bool CheckPositionInBorders(Vector2 point)
+	public bool CheckPositionInBorders(Vector3 point)
 	{
-		return point.x >= -leftBorder && point.x <= rightBorder && point.y >= -bottomBorder && point.y <= topBorder;
+		return point.x >= -leftBorder && point.x <= rightBorder && point.z >= -bottomBorder && point.z <= topBorder;
 	}
 
 	public Vector3 ClampVectorToArea(Vector3 point)

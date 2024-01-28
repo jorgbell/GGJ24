@@ -148,12 +148,12 @@ public class PlayerController : MonoBehaviour
 
     private Vector3 GetJugglePosition() //This little maneuver is going to cost us 100000 years.
     {
-        Vector3 positionCandidate = juggleArea.SelectPoint();
+        Vector3 positionCandidate = juggleArea.SelectPoint() + this.transform.position;
+        
         if(MapBorders.Instance.CheckPositionInBorders(positionCandidate) == true)
         {
-            return positionCandidate + this.transform.position; // A veces una chica
+            return positionCandidate; // A veces una chica
         }
-
         return GetJugglePosition();
     }
 
