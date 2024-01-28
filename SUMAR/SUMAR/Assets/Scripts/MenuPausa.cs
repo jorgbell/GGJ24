@@ -1,3 +1,4 @@
+using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -34,4 +35,5 @@ public class MenuPausa : MonoBehaviour
 		Application.Quit();
 #endif
 	}
+
 }

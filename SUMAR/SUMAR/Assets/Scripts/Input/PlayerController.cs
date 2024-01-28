@@ -142,9 +142,12 @@ public class PlayerController : MonoBehaviour
 
                     bool pickedUpJuggle = __targetPickupArea.TryPickup(playerID);
                     if(pickedUpJuggle) {
+    					animator.SetTrigger("catch");
                         juggleAmmo++;
                         pointsManager.catchBall(playerID);
-                    }
+					}
+
+                    
                     break;
                 case INPUTACTIONS.THROW:
 
