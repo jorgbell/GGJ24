@@ -25,6 +25,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float tauntTime;
     private SpriteRenderer spriteRenderer; //CAMBIARPORANIMACION
 
+    [Header("Taunt")]
+    [SerializeField] float stunTime;
+
     [Header("Animations")]
     [SerializeField] Animator animator;
     [SerializeField] AnimatorController[] playerControllers;
@@ -53,6 +56,9 @@ public class PlayerController : MonoBehaviour
 
     bool m_isInTaunt = false;
     float m_initialTauntTime;
+
+    bool m_isStunned = false;
+    float m_initialStunTime;
 
     private void Awake()
     {
@@ -178,8 +184,11 @@ public class PlayerController : MonoBehaviour
 		}
 
 
+        if (m_isStunned){
 
-		if (m_isInTaunt)
+            HandleStun();
+
+        }else if (m_isInTaunt)
         {
             HandleTaunt();
 
@@ -308,6 +317,15 @@ public class PlayerController : MonoBehaviour
         if (isJuggle)
         {
             bool hasBeenShootWithJuggle = juggleProjectile.TryReceiveShot(playerID);
+
+            if (hasBeenShootWithJuggle)
+            {
+                m_isStunned = true;
+                m_initialStunTime = Time.time;
+                animator.SetTrigger("hit");
+                AudioManager.instance.Play("goofyass4");
+            }
+
         }
     }
 
@@ -343,6 +361,15 @@ public class PlayerController : MonoBehaviour
             m_isInTaunt = false;
 			animator.SetBool("isInTaunt", false);
 			return;
+        }
+    }
+
+    private void HandleStun()
+    {
+        if (m_initialStunTime + stunTime < Time.time)
+        {
+            m_isStunned = false;
+            return;
         }
     }
 }

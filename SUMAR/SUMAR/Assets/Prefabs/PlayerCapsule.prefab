@@ -56,6 +56,7 @@ MonoBehaviour:
   dashTime: 0.4
   dashCooldownTime: 1
   tauntTime: 1
+  stunTime: 1
   animator: {fileID: 7073712425018367552}
   playerControllers:
   - {fileID: 9100000, guid: 4307fa148d15fac4baacea191fab10e0, type: 2}
