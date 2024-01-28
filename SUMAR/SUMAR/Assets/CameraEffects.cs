@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraEffects : MonoBehaviour
@@ -23,6 +21,8 @@ public class CameraEffects : MonoBehaviour
         {
             camTransform = GetComponent(typeof(Transform)) as Transform;
         }
+
+        GameManager.Instance.cameraEffects = this;
     }
 
     void OnEnable()

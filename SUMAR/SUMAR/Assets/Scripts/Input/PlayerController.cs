@@ -108,6 +108,7 @@ public class PlayerController : MonoBehaviour
 
                     Debug.Log(catchedInput.ToString());
 					animator.SetTrigger("attack");
+					AudioManager.instance.Play("goofyass3");
 					break;
                 case INPUTACTIONS.CATCH:
                     if (__targetPickupArea == null) break;
@@ -128,8 +129,9 @@ public class PlayerController : MonoBehaviour
                     juggleToThrow.setTargetPosition(juggleTargetPosition, this.transform.position, false);
                     pointsManager.throwBall(playerID);
 					animator.SetTrigger("hurl");
+					AudioManager.instance.Play("hurl");
 
-                    break;
+					break;
                 case INPUTACTIONS.DASH:
                     Debug.Log(catchedInput.ToString());
                     OnDash();
@@ -141,6 +143,7 @@ public class PlayerController : MonoBehaviour
                 case INPUTACTIONS.PAUSE:
                     Debug.Log(catchedInput.ToString());
 					animator.SetTrigger("hit"); //TODO: provisional para hacer test
+					AudioManager.instance.Play("goofyass4");
 					break;
                 default:
                     break;
@@ -211,7 +214,8 @@ public class PlayerController : MonoBehaviour
 			animator.SetBool("isInDash", true);
 			m_initialDashTime = Time.time;
             m_dashDirection = axisvalue;
-        }
+			AudioManager.instance.Play("dash");
+		}
 	}
     public void OnTaunt()
     {
@@ -220,7 +224,8 @@ public class PlayerController : MonoBehaviour
             m_isInTaunt = true;
 			animator.SetBool("isInTaunt", true);
 			m_initialTauntTime = Time.time;
-        }
+			AudioManager.instance.Play("goofyass2");
+		}
     }
 
     private void HandleMovement()

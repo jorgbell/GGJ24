@@ -1230,6 +1230,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 825cb463a9cb0414c9cf5c4869f1ec4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraEffects: {fileID: 0}
 --- !u!4 &1810407521
 Transform:
   m_ObjectHideFlags: 0
@@ -1388,26 +1389,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1313662486167880739, guid: 388ef5ee0cd54e041afeb818ad034f21, type: 3}
-      propertyPath: sounds.Array.data[8].loop
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1313662486167880739, guid: 388ef5ee0cd54e041afeb818ad034f21, type: 3}
-      propertyPath: sounds.Array.data[8].maxPitch
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1313662486167880739, guid: 388ef5ee0cd54e041afeb818ad034f21, type: 3}
-      propertyPath: sounds.Array.data[8].minPitch
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1313662486167880739, guid: 388ef5ee0cd54e041afeb818ad034f21, type: 3}
-      propertyPath: sounds.Array.data[9].maxPitch
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1313662486167880739, guid: 388ef5ee0cd54e041afeb818ad034f21, type: 3}
-      propertyPath: sounds.Array.data[9].minPitch
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2989472001488146353, guid: 388ef5ee0cd54e041afeb818ad034f21, type: 3}
       propertyPath: m_Name
       value: AudioManager
