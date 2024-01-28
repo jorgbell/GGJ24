@@ -596,7 +596,7 @@ MonoBehaviour:
   pointsRightBorder:
   - {fileID: 900637815}
   - {fileID: 137792157}
-  maxPoints: 2
+  maxPoints: 10
 --- !u!4 &377703340
 Transform:
   m_ObjectHideFlags: 0
