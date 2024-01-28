@@ -202,6 +202,7 @@ public class PlayerController : MonoBehaviour
     {
         if (!m_isInDash && Time.time > m_endDashTime + dashCooldownTime && !m_isInTaunt)
         {
+            GameManager.Instance.cameraEffects.shakeDuration = 2;
             m_isInDash = true;
 			animator.SetBool("isInDash", true);
 			m_initialDashTime = Time.time;

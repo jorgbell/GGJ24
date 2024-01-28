@@ -13,15 +13,21 @@ public class GameManager : MonoBehaviour
     {
         get { return instance; }
     }
+    public CameraEffects cameraEffects;
     private void Awake()
     {
-        if (instance != null)
+        if (instance == null)
         {
-            Destroy(gameObject);
-            return;
+            Debug.Log("GameManager instanced");
+            instance = this;
+            DontDestroyOnLoad(gameObject);
         }
-        instance = this;
-        DontDestroyOnLoad(gameObject);
+        else if (instance != this)
+        {
+            instance.cameraEffects = cameraEffects;
+            Destroy(gameObject);
+        }
+
 
 
     }
@@ -30,10 +36,6 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        //if (Random.Range(0, 2) == 0)
-        //    AudioManager.instance.Play("ost1");
-        //else
-        //    AudioManager.instance.Play("ost1");
     }
     public void LoadScene(string sceneName)
     {
