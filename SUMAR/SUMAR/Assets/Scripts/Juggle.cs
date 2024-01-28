@@ -37,11 +37,13 @@ public class Juggle : MonoBehaviour
     {
         __playerController = playerController;
         __playerID = playerController.playerID;
+        jugglePickupArea.SetPlayerId(__playerID);
     }
 
     public void Shoot(Vector3 startingPosition, Vector3 direction)
     {
         transform.position = startingPosition;
+        juggleBall.transform.localPosition = new Vector3(0, 0, 0);
         __direction = direction;
         sprite.enabled = true;
         state = JUGGLESTATE.THROWN;
@@ -51,8 +53,8 @@ public class Juggle : MonoBehaviour
 
     IEnumerator ShootCoroutine()
     {
-        while (MapBorders.Instance.CheckPositionInBorders(transform.position) == true){
-            transform.position += (__direction * shootSpeed * Time.deltaTime);
+        while (MapBorders.Instance.CheckPositionInBorders(juggleBall.transform.position) == true){
+            juggleBall.transform.position += (__direction * shootSpeed * Time.deltaTime);
 
             yield return null;
         }
@@ -65,13 +67,12 @@ public class Juggle : MonoBehaviour
     {
         if (playerID == __playerID || state != JUGGLESTATE.THROWN) return false;
 
-        sprite.enabled = false;
-        state=JUGGLESTATE.AVAILABLE;
         StopCoroutine(shootCoroutine);
         shootCoroutine = null;
 
         Vector3 newJugglePosition = __playerController.GetJugglePosition();
-        setTargetPosition(newJugglePosition, transform.position);
+
+        setTargetPosition(newJugglePosition, juggleBall.transform.position);
 
         return true;
     }
