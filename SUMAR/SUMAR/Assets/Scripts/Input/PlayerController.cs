@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] JuggleArea juggleArea;
     [SerializeField] Juggle jugglePrefab;
     [SerializeField] PointsManager pointsManager;
+    private JugglePickupArea __targetPickupArea = null; //JANKY AF ESPERO QUE NO DE PROBLEMAS
 
     private Vector3 axisvalue = new Vector3();
     private Queue<INPUTACTIONS> inputQueue = new Queue<INPUTACTIONS>();
@@ -75,7 +76,7 @@ public class PlayerController : MonoBehaviour
         for (int i = 0; i < maxJuggleAmmo; i++)
         {
             Juggle instantiatedJuggle = Instantiate(jugglePrefab, Vector3.zero, Quaternion.identity);
-            instantiatedJuggle.SetPlayer(this);
+            instantiatedJuggle.SetPlayer(playerID);
             playerJuggles.Add(instantiatedJuggle);
         }
     }
@@ -105,10 +106,13 @@ public class PlayerController : MonoBehaviour
                     Debug.Log(catchedInput.ToString());
                     break;
                 case INPUTACTIONS.CATCH:
+                    if (__targetPickupArea == null) break;
 
-                    pointsManager.catchBall(playerID);
-
-                    Debug.Log(catchedInput.ToString());
+                    bool pickedUpJuggle = __targetPickupArea.TryPickup(playerID);
+                    if(pickedUpJuggle) {
+                        juggleAmmo++;
+                        // Otorgar puntos imaginarios aquí
+                    }
                     break;
                 case INPUTACTIONS.THROW:
 
@@ -192,7 +196,8 @@ public class PlayerController : MonoBehaviour
         if (!m_isInDash && Time.time > m_endDashTime + dashCooldownTime && !m_isInTaunt)
         {
             m_isInDash = true;
-            m_initialDashTime = Time.time;
+			animator.SetBool("isInDash", true);
+			m_initialDashTime = Time.time;
             m_dashDirection = axisvalue;
         }
 	}
@@ -201,8 +206,8 @@ public class PlayerController : MonoBehaviour
         if (!m_isInDash)
         {
             m_isInTaunt = true;
-            m_initialTauntTime = Time.time;
-            spriteRenderer.color = Color.blue;
+			animator.SetBool("isInTaunt", true);
+			m_initialTauntTime = Time.time;
         }
     }
 
@@ -211,7 +216,6 @@ public class PlayerController : MonoBehaviour
         if(axisvalue == Vector3.zero)
         {
             animator.SetBool("isRunning", false);
-
 			return;
 		}
 		animator.SetBool("isRunning", true);
@@ -234,21 +238,48 @@ public class PlayerController : MonoBehaviour
         {
             m_isInDash = false;
 			m_endDashTime = Time.time;
-			return;
-        }
 
-        Vector3 finalPosition = this.transform.position + (new Vector3(m_dashDirection.x, 0, m_dashDirection.y)).normalized * dashSpeed * Time.deltaTime;
+			animator.SetBool("isInDash", false);
+			return;
+		}
+
+		Vector3 finalPosition = this.transform.position + (new Vector3(m_dashDirection.x, 0, m_dashDirection.y)).normalized * dashSpeed * Time.deltaTime;
 
 		this.transform.position = MapBorders.Instance.ClampVectorToArea(finalPosition);
 	}
+
+    private void OnTriggerStay(Collider other)
+    {
+        bool isPickupArea = other.TryGetComponent(out JugglePickupArea pickup);
+        bool isJuggle = other.TryGetComponent(out JuggleProjectile juggleProjectile);
+
+        if (isPickupArea) // I know
+        {
+            __targetPickupArea = pickup;
+        }
+        else if (isJuggle)
+        {
+            juggleProjectile.TryPickUpFromFloor(playerID);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        bool isPickupArea = other.TryGetComponent(out JugglePickupArea pickup);
+
+        if (isPickupArea && pickup == __targetPickupArea) // Poetry
+        {
+            __targetPickupArea = null;
+        }
+    }
 
     private void HandleTaunt()
     {
         if (m_initialTauntTime + tauntTime < Time.time)
         {
             m_isInTaunt = false;
-            spriteRenderer.color = Color.white;
-            return;
+			animator.SetBool("isInTaunt", false);
+			return;
         }
     }
 }
