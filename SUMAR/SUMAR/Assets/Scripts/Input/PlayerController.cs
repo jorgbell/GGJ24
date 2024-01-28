@@ -97,7 +97,8 @@ public class PlayerController : MonoBehaviour
 
 
     private void Update()
-    {
+    {       
+
         INPUTACTIONS catchedInput;
         while (inputQueue.TryDequeue(out catchedInput))
         {
@@ -142,15 +143,24 @@ public class PlayerController : MonoBehaviour
                     break;
                 case INPUTACTIONS.PAUSE:
                     Debug.Log(catchedInput.ToString());
-					animator.SetTrigger("hit"); //TODO: provisional para hacer test
-					AudioManager.instance.Play("goofyass4");
+					//animator.SetTrigger("hit"); //TODO: provisional para hacer test
+					//AudioManager.instance.Play("goofyass4");
+
+                    MenuPausa.Instance.ToggleMenu();
 					break;
                 default:
                     break;
             }
         }
 
-        if (m_isInTaunt)
+		if (Time.timeScale == 0.0f)
+		{
+			return;
+		}
+
+
+
+		if (m_isInTaunt)
         {
             HandleTaunt();
 
