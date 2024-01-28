@@ -1,11 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
 
 public class MenuWin : MonoBehaviour
 {
+	public PointsManager pointsManager;
     public GameObject menuGanar;
 	public TextMeshProUGUI menuText;
 
@@ -20,8 +19,9 @@ public class MenuWin : MonoBehaviour
 	{
 		string aux = playerID == 0 ? "rojo" : "azul";
 		menuText.text = $"Has ganado jugador {aux}";
-
+		ToggleMenu();
 	}
+
 	public void ToggleMenu()
 	{
 		menuGanar.SetActive(!menuGanar.activeSelf);
@@ -35,5 +35,16 @@ public class MenuWin : MonoBehaviour
 #else
 		Application.Quit();
 #endif
+	}
+
+	public void Menu()
+	{
+		GameManager.Instance.LoadScene("InitSceneDevelop");
+	}
+
+	public void EndlessMode()
+	{
+		ToggleMenu();
+		pointsManager.SetEndlessMode(true);
 	}
 }

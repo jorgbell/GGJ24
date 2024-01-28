@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -26,8 +25,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float stunTime;
 
     [Header("Animations")]
-    [SerializeField] Animator animator;
-    [SerializeField] AnimatorController[] playerControllers;
+    [SerializeField] Animator redAnimator;
+    [SerializeField] Animator blueAnimator;
 
     [Header("Juggle")]
     [SerializeField] int maxJuggleAmmo = 5;
@@ -56,6 +55,7 @@ public class PlayerController : MonoBehaviour
 
     bool m_isStunned = false;
     float m_initialStunTime;
+    private Animator animator;
 
     private void Awake()
     {
@@ -76,7 +76,20 @@ public class PlayerController : MonoBehaviour
         pointsManager = GameObject.FindWithTag("PointsManager").GetComponent<PointsManager>();
 
         playerID = GameManager.Instance.getPlayerId();
-        animator.runtimeAnimatorController = playerControllers[playerID];
+
+        if(playerID == 0) 
+        { 
+            redAnimator.gameObject.SetActive(true); 
+            blueAnimator.gameObject.SetActive(false);
+            animator = redAnimator;
+
+		}
+        else
+		{
+			redAnimator.gameObject.SetActive(false);
+			blueAnimator.gameObject.SetActive(true);
+            animator = blueAnimator;
+		}
 
 		Vector3 spawnPoint = MapBorders.Instance.GetSpawnPoint(playerID).position;
 		transform.position = new Vector3(spawnPoint.x, transform.position.y, spawnPoint.z);

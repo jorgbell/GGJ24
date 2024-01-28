@@ -13,6 +13,8 @@ public class PointsManager : MonoBehaviour
 
     [SerializeField] private int maxPoints = 50;
 
+    private bool endlessMode = false;
+
 	private void Start()
 	{
         updateUI();
@@ -33,7 +35,7 @@ public class PointsManager : MonoBehaviour
         airborneBalls[playerIndex] = Mathf.Max(airborneBalls[playerIndex], 0);
         updateUI();
 
-        if(points[playerIndex] >= maxPoints)
+        if(points[playerIndex] >= maxPoints && !endlessMode)
         {
             MenuWin.Instance.WinBro(playerIndex);
 		}
@@ -50,10 +52,19 @@ public class PointsManager : MonoBehaviour
     }
 
     private void updateUI() {
-        for (int i = 0; i < 2; i++)
+        if (!endlessMode)
         {
-            pointsImage[i].transform.localScale = new Vector3((float)points[i] / maxPoints, 1, 1);
-            pointsRightBorder[i].rectTransform.pivot = new Vector2(1f - (float)points[i] / maxPoints, 0.5f);
+            for (int i = 0; i < 2; i++)
+            {
+                pointsImage[i].transform.localScale = new Vector3((float)points[i] / maxPoints, 1, 1);
+                pointsRightBorder[i].rectTransform.pivot = new Vector2(1f - (float)points[i] / maxPoints, 0.5f);
+            }
         }
+    }
+
+    public void SetEndlessMode(bool value)
+    {
+        Debug.Log("endlesmode");
+        endlessMode = value;
     }
 }
