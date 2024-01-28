@@ -31,7 +31,13 @@ public class PointsManager : MonoBehaviour
 
         airborneBalls[playerIndex]--;
         updateUI();
-    }
+
+        if(points[playerIndex] >= maxPoints)
+        {
+            Debug.Log("HAS GANADO JUGADOR: " + playerIndex);
+        }
+
+	}
 
     public void dropBall(int playerIndex)
     {
