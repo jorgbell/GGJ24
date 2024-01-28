@@ -264,6 +264,8 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
+        Debug.Log("aaaa");
+
         bool isPickupArea = other.TryGetComponent(out JugglePickupArea pickup);
         bool isJuggle = other.TryGetComponent(out JuggleProjectile juggleProjectile);
 
@@ -295,5 +297,11 @@ public class PlayerController : MonoBehaviour
 			animator.SetBool("isInTaunt", false);
 			return;
         }
+    }
+
+	private void OnDrawGizmos()
+	{
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(this.transform.position, GetComponent<SphereCollider>().radius * transform.localScale.x);
     }
 }

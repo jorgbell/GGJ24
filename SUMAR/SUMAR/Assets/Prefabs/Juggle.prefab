@@ -121,7 +121,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 2.46
+  m_Radius: 2.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &70534135053686568
 MonoBehaviour:
@@ -187,7 +187,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minTravelTime: 1.5
   maxTravelTime: 3
-  pickupThreshold: 0.9
+  pickupThreshold: 0.8
   minHeight: 4
   maxHeight: 6
   jugglePickupArea: {fileID: 70534135053686568}

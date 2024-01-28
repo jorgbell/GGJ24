@@ -49,4 +49,13 @@ public class JugglePickupArea : MonoBehaviour
 
         return false;
     }
+
+	private void OnDrawGizmos()
+	{
+        if (sprite.enabled)
+        {
+            Gizmos.DrawWireSphere(this.transform.position, GetComponent<SphereCollider>().radius * 0.2f);
+        }
+
+	}
 }
