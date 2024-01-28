@@ -33,12 +33,14 @@ public class PlayerController : MonoBehaviour
     private List<Juggle> playerJuggles = new List<Juggle>();
     [SerializeField] JuggleArea juggleArea;
     [SerializeField] Juggle jugglePrefab;
+    private JugglePickupArea __targetPickupArea = null; //JANKY AF ESPERO QUE NO DE PROBLEMAS
 
     private Vector3 axisvalue = new Vector3();
     private Queue<INPUTACTIONS> inputQueue = new Queue<INPUTACTIONS>();
 
     [SerializeField]
     private int playerID = 1;
+    private int? uniqueID = null;
 
     bool m_isInDash = false;
     float m_initialDashTime;
@@ -72,7 +74,7 @@ public class PlayerController : MonoBehaviour
         for (int i = 0; i < maxJuggleAmmo; i++)
         {
             Juggle instantiatedJuggle = Instantiate(jugglePrefab, Vector3.zero, Quaternion.identity);
-            instantiatedJuggle.SetPlayer(this);
+            instantiatedJuggle.SetPlayer(playerID);
             playerJuggles.Add(instantiatedJuggle);
         }
     }
@@ -99,7 +101,13 @@ public class PlayerController : MonoBehaviour
                     Debug.Log(catchedInput.ToString());
                     break;
                 case INPUTACTIONS.CATCH:
-                    Debug.Log(catchedInput.ToString());
+                    if (__targetPickupArea == null) break;
+
+                    bool pickedUpJuggle = __targetPickupArea.TryPickup(playerID);
+                    if(pickedUpJuggle) {
+                        juggleAmmo++;
+                        // Otorgar puntos imaginarios aquí
+                    }
                     break;
                 case INPUTACTIONS.THROW:
                     Juggle? juggleToThrow = GetAvailableJuggle();
@@ -141,12 +149,12 @@ public class PlayerController : MonoBehaviour
 
     private Vector3 GetJugglePosition() //This little maneuver is going to cost us 100000 years.
     {
-        Vector3 positionCandidate = juggleArea.SelectPoint();
+        Vector3 positionCandidate = juggleArea.SelectPoint() + this.transform.position;
+        
         if(MapBorders.Instance.CheckPositionInBorders(positionCandidate) == true)
         {
-            return positionCandidate + this.transform.position; // A veces una chica
+            return positionCandidate; // A veces una chica
         }
-
         return GetJugglePosition();
     }
 
@@ -163,12 +171,17 @@ public class PlayerController : MonoBehaviour
 
     public void EnqueueActionInput(InputAction.CallbackContext ctx, INPUTACTIONS input)
     {
-        //if (ctx.performed)
-            inputQueue.Enqueue(input);
+        if (ctx.control.device.deviceId == uniqueID)
+        {
+            if (ctx.performed)
+                inputQueue.Enqueue(input);
+        }
+
     }
 
     public void OnMovement(InputAction.CallbackContext ctx)
     {
+        if (uniqueID == null) { uniqueID = ctx.control.device.deviceId; }
         if (ctx.performed)
         {
             axisvalue = ctx.ReadValue<Vector3>();
@@ -190,8 +203,8 @@ public class PlayerController : MonoBehaviour
         if (!m_isInDash)
         {
             m_isInTaunt = true;
-            m_initialTauntTime = Time.time;
-            spriteRenderer.color = Color.blue;
+			animator.SetBool("isInTaunt", true);
+			m_initialTauntTime = Time.time;
         }
     }
 
@@ -232,13 +245,38 @@ public class PlayerController : MonoBehaviour
 		this.transform.position = MapBorders.Instance.ClampVectorToArea(finalPosition);
 	}
 
+    private void OnTriggerStay(Collider other)
+    {
+        bool isPickupArea = other.TryGetComponent(out JugglePickupArea pickup);
+        bool isJuggle = other.TryGetComponent(out JuggleProjectile juggleProjectile);
+
+        if (isPickupArea) // I know
+        {
+            __targetPickupArea = pickup;
+        }
+        else if (isJuggle)
+        {
+            juggleProjectile.TryPickUpFromFloor(playerID);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        bool isPickupArea = other.TryGetComponent(out JugglePickupArea pickup);
+
+        if (isPickupArea && pickup == __targetPickupArea) // Poetry
+        {
+            __targetPickupArea = null;
+        }
+    }
+
     private void HandleTaunt()
     {
         if (m_initialTauntTime + tauntTime < Time.time)
         {
             m_isInTaunt = false;
-            spriteRenderer.color = Color.white;
-            return;
+			animator.SetBool("isInTaunt", false);
+			return;
         }
     }
 }
