@@ -41,6 +41,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField]
     private int playerID = 1;
+    private int? uniqueID = null;
 
     bool m_isInDash = false;
     float m_initialDashTime;
@@ -155,12 +156,12 @@ public class PlayerController : MonoBehaviour
 
     private Vector3 GetJugglePosition() //This little maneuver is going to cost us 100000 years.
     {
-        Vector3 positionCandidate = juggleArea.SelectPoint();
+        Vector3 positionCandidate = juggleArea.SelectPoint() + this.transform.position;
+        
         if(MapBorders.Instance.CheckPositionInBorders(positionCandidate) == true)
         {
-            return positionCandidate + this.transform.position; // A veces una chica
+            return positionCandidate; // A veces una chica
         }
-
         return GetJugglePosition();
     }
 
@@ -177,12 +178,17 @@ public class PlayerController : MonoBehaviour
 
     public void EnqueueActionInput(InputAction.CallbackContext ctx, INPUTACTIONS input)
     {
-        //if (ctx.performed)
-            inputQueue.Enqueue(input);
+        if (ctx.control.device.deviceId == uniqueID)
+        {
+            if (ctx.performed)
+                inputQueue.Enqueue(input);
+        }
+
     }
 
     public void OnMovement(InputAction.CallbackContext ctx)
     {
+        if (uniqueID == null) { uniqueID = ctx.control.device.deviceId; }
         if (ctx.performed)
         {
             axisvalue = ctx.ReadValue<Vector3>();
