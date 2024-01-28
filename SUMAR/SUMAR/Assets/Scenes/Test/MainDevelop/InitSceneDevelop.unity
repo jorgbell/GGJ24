@@ -1827,9 +1827,17 @@ PrefabInstance:
       value: 32
       objectReference: {fileID: 0}
     - target: {fileID: 1313662486167880739, guid: 388ef5ee0cd54e041afeb818ad034f21, type: 3}
+      propertyPath: sounds.Array.data[24].loop
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1313662486167880739, guid: 388ef5ee0cd54e041afeb818ad034f21, type: 3}
       propertyPath: sounds.Array.data[31].clip
       value: 
       objectReference: {fileID: 8300000, guid: faff79c79a8beb74d9ee8ef4ee866b37, type: 3}
+    - target: {fileID: 1313662486167880739, guid: 388ef5ee0cd54e041afeb818ad034f21, type: 3}
+      propertyPath: sounds.Array.data[31].loop
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1313662486167880739, guid: 388ef5ee0cd54e041afeb818ad034f21, type: 3}
       propertyPath: sounds.Array.data[31].name
       value: p2_step
