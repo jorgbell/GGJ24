@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Xml;
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -26,6 +27,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Animations")]
     [SerializeField] Animator animator;
+    [SerializeField] AnimatorController[] playerControllers;
 
     [Header("Juggle")]
     [SerializeField] int maxJuggleAmmo = 5;
@@ -71,8 +73,9 @@ public class PlayerController : MonoBehaviour
         pointsManager = GameObject.FindWithTag("PointsManager").GetComponent<PointsManager>();
 
         playerID = GameManager.Instance.getPlayerId();
+        animator.runtimeAnimatorController = playerControllers[playerID];
 
-        Vector3 spawnPoint = MapBorders.Instance.GetSpawnPoint(playerID).position;
+		Vector3 spawnPoint = MapBorders.Instance.GetSpawnPoint(playerID).position;
 		transform.position = new Vector3(spawnPoint.x, transform.position.y, spawnPoint.z);
     }
 
